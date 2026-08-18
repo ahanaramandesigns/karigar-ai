@@ -1,10 +1,10 @@
 import type { ArtisanStory, ProductAnalysis } from '../types';
+import demoBasketImage from '../assets/demo-basket.svg';
 
 // Sample/demo artisan data so judges can experience the full flow instantly
 // without uploading anything. Clearly fictional — for demonstration only.
 
-export const DEMO_IMAGE_URL =
-  'https://images.unsplash.com/photo-1622560481156-01415a693ea6?q=80&w=1200&auto=format&fit=crop';
+export const DEMO_IMAGE_URL = demoBasketImage;
 
 export const DEMO_PRODUCT_NAME = 'Handwoven Bamboo Basket';
 

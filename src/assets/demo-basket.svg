@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf5f0"/>
+      <stop offset="1" stop-color="#fae6d8"/>
+    </linearGradient>
+    <linearGradient id="basketBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e5a92f"/>
+      <stop offset="1" stop-color="#b84a22"/>
+    </linearGradient>
+    <linearGradient id="basketRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2d789"/>
+      <stop offset="1" stop-color="#d3612e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="600" fill="url(#bg)"/>
+
+  <!-- soft shadow -->
+  <ellipse cx="300" cy="500" rx="170" ry="24" fill="#78301c" opacity="0.12"/>
+
+  <!-- basket body -->
+  <path d="M140 300 Q140 470 300 480 Q460 470 460 300 Z" fill="url(#basketBody)"/>
+
+  <!-- woven texture lines -->
+  <g stroke="#78301c" stroke-width="3" opacity="0.35" fill="none">
+    <path d="M150 320 Q300 360 450 320"/>
+    <path d="M155 360 Q300 400 445 360"/>
+    <path d="M165 400 Q300 435 435 400"/>
+    <path d="M185 440 Q300 465 415 440"/>
+  </g>
+  <g stroke="#78301c" stroke-width="3" opacity="0.28" fill="none">
+    <path d="M190 300 L215 475"/>
+    <path d="M240 300 L255 480"/>
+    <path d="M300 300 L300 482"/>
+    <path d="M360 300 L345 480"/>
+    <path d="M410 300 L385 475"/>
+  </g>
+
+  <!-- rim -->
+  <ellipse cx="300" cy="300" rx="160" ry="38" fill="url(#basketRim)"/>
+  <ellipse cx="300" cy="300" rx="160" ry="38" fill="none" stroke="#78301c" stroke-width="4" opacity="0.4"/>
+  <ellipse cx="300" cy="292" rx="140" ry="28" fill="#fae6d8" opacity="0.5"/>
+
+  <!-- handle -->
+  <path d="M220 280 Q300 160 380 280" fill="none" stroke="#96391c" stroke-width="14" stroke-linecap="round"/>
+  <path d="M220 280 Q300 160 380 280" fill="none" stroke="#e17e49" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- decorative dots for texture -->
+  <g fill="#78301c" opacity="0.25">
+    <circle cx="200" cy="330" r="3"/>
+    <circle cx="260" cy="345" r="3"/>
+    <circle cx="330" cy="345" r="3"/>
+    <circle cx="395" cy="330" r="3"/>
+    <circle cx="220" cy="390" r="3"/>
+    <circle cx="300" cy="400" r="3"/>
+    <circle cx="380" cy="390" r="3"/>
+  </g>
+</svg>

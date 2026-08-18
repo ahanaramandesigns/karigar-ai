@@ -132,7 +132,7 @@ export default function App() {
       ...INITIAL_STATE,
       screen: 3,
       imageDataUrl: DEMO_IMAGE_URL,
-      imageFileName: 'demo-bamboo-basket.jpg',
+      imageFileName: 'demo-bamboo-basket.svg',
       productNameHint: DEMO_PRODUCT_NAME,
       story: DEMO_STORY,
       isDemoMode: true,
