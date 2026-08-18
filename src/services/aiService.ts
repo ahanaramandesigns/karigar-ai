@@ -296,19 +296,33 @@ const L10N: Record<Language, Localized> = {
     originalStoryLabel: 'ಕುಶಲಕರ್ಮಿಯ ಕಥೆ (ಮೂಲ ಭಾಷೆಯಲ್ಲಿ)',
     categoryLabel: 'ವರ್ಗ',
   },
+  ta: {
+    by: 'பாரம்பரிய கைவினைஞரால் கையால் செய்யப்பட்டது',
+    handmadeWith: 'கையால் செய்யப்பட்டது, பயன்படுத்திய பொருள்:',
+    approxTime: 'தயாரிக்க தோராயமான நேரம்',
+    originalStoryLabel: 'கைவினைஞரின் கதை (மூல மொழியில்)',
+    categoryLabel: 'பிரிவு',
+  },
+  ml: {
+    by: 'ഒരു പരമ്പരാഗത കരകൗശല വിദഗ്ധൻ കൈകൊണ്ട് നിർമ്മിച്ചത്',
+    handmadeWith: 'കൈകൊണ്ട് നിർമ്മിച്ചത്, ഉപയോഗിച്ച വസ്തുക്കൾ:',
+    approxTime: 'നിർമ്മിക്കാൻ ഏകദേശം എടുക്കുന്ന സമയം',
+    originalStoryLabel: 'കരകൗശല വിദഗ്ധന്റെ കഥ (യഥാർത്ഥ ഭാഷയിൽ)',
+    categoryLabel: 'വിഭാഗം',
+  },
+  mr: {
+    by: 'पारंपरिक कारागिराने हाताने बनवलेले',
+    handmadeWith: 'हाताने बनवलेले, वापरलेले साहित्य:',
+    approxTime: 'बनवण्यासाठी अंदाजे लागणारा वेळ',
+    originalStoryLabel: 'कारागिराची कहाणी (मूळ भाषेत)',
+    categoryLabel: 'प्रकार',
+  },
   es: {
     by: 'Hecho a mano por un artesano tradicional',
     handmadeWith: 'Hecho a mano con',
     approxTime: 'Tiempo aproximado de elaboración',
     originalStoryLabel: 'Historia del artesano (idioma original)',
     categoryLabel: 'Categoría',
-  },
-  fr: {
-    by: 'Fabriqué à la main par un artisan traditionnel',
-    handmadeWith: 'Fait à la main avec',
-    approxTime: 'Temps de fabrication approximatif',
-    originalStoryLabel: "Histoire de l'artisan (langue d'origine)",
-    categoryLabel: 'Catégorie',
   },
 };
 

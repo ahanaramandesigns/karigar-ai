@@ -1,13 +1,15 @@
 // Core domain types for Karigar AI
 
-export type Language = 'en' | 'hi' | 'kn' | 'es' | 'fr';
+export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'es';
 
 export const LANGUAGE_LABELS: Record<Language, { name: string; native: string; flag: string }> = {
   en: { name: 'English', native: 'English', flag: '🇬🇧' },
   hi: { name: 'Hindi', native: 'हिन्दी', flag: '🇮🇳' },
   kn: { name: 'Kannada', native: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  ta: { name: 'Tamil', native: 'தமிழ்', flag: '🇮🇳' },
+  ml: { name: 'Malayalam', native: 'മലയാളം', flag: '🇮🇳' },
+  mr: { name: 'Marathi', native: 'मराठी', flag: '🇮🇳' },
   es: { name: 'Spanish', native: 'Español', flag: '🇪🇸' },
-  fr: { name: 'French', native: 'Français', flag: '🇫🇷' },
 };
 
 export interface ArtisanStory {

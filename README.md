@@ -16,7 +16,7 @@ Built for a 12-hour hackathon. Fully functional end-to-end demo, works offline w
 4. **AI Product Analysis** — best-effort, clearly-labelled, fully editable read of the photo.
 5. **Global Listing** — title, descriptions, story, materials, keywords — generated from your words, always editable, with Regenerate.
 6. **Smart Pricing** — a suggested range and starting price from material cost, time, and margin, with a plain-language explanation. You always have final control.
-7. **Multilingual Listing** — English, Hindi, Kannada, Spanish, French. Tabbed view, copy buttons, your own story preserved rather than blindly re-written.
+7. **Multilingual Listing** — English, Hindi, Kannada, Tamil, Malayalam, Marathi, Spanish. Tabbed view, copy buttons, your own story preserved rather than blindly re-written.
 8. **Marketing Kit** — Instagram caption, WhatsApp message, SEO keywords, target customer, tagline. Editable and copyable.
 9. **Dashboard / Export** — everything in one place, downloadable as a listing document, with "ready for marketplace export" cards for Etsy / Amazon Karigar / ONDC (clearly labelled as future integrations, not live connections).
 
