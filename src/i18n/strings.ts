@@ -160,7 +160,7 @@ const EN = {
   'dashboard.exportNote': "Not yet connected to these marketplaces — your listing is formatted and ready when you are.",
   'dashboard.celebration': '🎉 You make the craft. We handle the digital world.',
 
-  'marketplace.eyebrow': 'Karigar Marketplace',
+  'marketplace.eyebrow': 'Karvaan Marketplace',
   'marketplace.title': 'Shop Handmade, Straight From the Artisan',
   'marketplace.subtitle': "Every listing here was written, priced and translated by a karigar using the AI tool — browse what's been made so far.",
   'marketplace.emptyTitle': 'No products here yet',
@@ -214,7 +214,7 @@ const EN = {
   'a11y.readOnHoverOn': 'Read on Hover: On',
   'a11y.readOnHoverOff': 'Read on Hover: Off',
 
-  'footer.tagline': 'Karigar AI — a hackathon concept. "You make the craft. We handle the digital world."',
+  'footer.tagline': 'Karvaan AI — a hackathon concept. "You make the craft. We handle the digital world."',
 } as const;
 
 const HI: Record<UIStringKey, string> = {
@@ -366,7 +366,7 @@ const HI: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'अभी इन मार्केटप्लेस से जुड़े नहीं हैं — आपकी लिस्टिंग तैयार है जब भी आप तैयार हों।',
   'dashboard.celebration': '🎉 आप शिल्प बनाएं। हम डिजिटल दुनिया संभालेंगे।',
 
-  'marketplace.eyebrow': 'कारीगर मार्केटप्लेस',
+  'marketplace.eyebrow': 'कारवां मार्केटप्लेस',
   'marketplace.title': 'सीधे कारीगर से हस्तनिर्मित खरीदें',
   'marketplace.subtitle': 'यहां हर लिस्टिंग एक कारीगर द्वारा AI टूल से लिखी, मूल्य निर्धारित और अनूदित की गई है — अब तक क्या बना है देखें।',
   'marketplace.emptyTitle': 'अभी यहां कोई उत्पाद नहीं है',
@@ -420,7 +420,7 @@ const HI: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'होवर पर पढ़ना: चालू',
   'a11y.readOnHoverOff': 'होवर पर पढ़ना: बंद',
 
-  'footer.tagline': 'कारीगर AI — एक हैकाथॉन विचार। "आप शिल्प बनाएं। हम डिजिटल दुनिया संभालेंगे।"',
+  'footer.tagline': 'कारवां AI — एक हैकाथॉन विचार। "आप शिल्प बनाएं। हम डिजिटल दुनिया संभालेंगे।"',
 };
 
 const KN: Record<UIStringKey, string> = {
@@ -572,7 +572,7 @@ const KN: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'ಈ ಮಾರ್ಕೆಟ್‌ಪ್ಲೇಸ್‌ಗಳಿಗೆ ಇನ್ನೂ ಸಂಪರ್ಕಿಸಲಾಗಿಲ್ಲ — ನೀವು ಸಿದ್ಧರಾದಾಗ ನಿಮ್ಮ ಪಟ್ಟಿ ಸಿದ್ಧವಾಗಿದೆ.',
   'dashboard.celebration': '🎉 ನೀವು ಕರಕುಶಲತೆ ಮಾಡಿ. ನಾವು ಡಿಜಿಟಲ್ ಜಗತ್ತನ್ನು ನಿಭಾಯಿಸುತ್ತೇವೆ.',
 
-  'marketplace.eyebrow': 'ಕಾರೀಗರ್ ಮಾರ್ಕೆಟ್‌ಪ್ಲೇಸ್',
+  'marketplace.eyebrow': 'ಕಾರವಾನ್ ಮಾರ್ಕೆಟ್‌ಪ್ಲೇಸ್',
   'marketplace.title': 'ಕಾರೀಗರ್‌ನಿಂದ ನೇರವಾಗಿ ಕೈಯಿಂದ ಮಾಡಿದ ವಸ್ತುಗಳನ್ನು ಖರೀದಿಸಿ',
   'marketplace.subtitle': 'ಇಲ್ಲಿನ ಪ್ರತಿಯೊಂದು ಪಟ್ಟಿಯನ್ನೂ ಒಬ್ಬ ಕಾರೀಗರ್ AI ಟೂಲ್ ಬಳಸಿ ಬರೆದಿದ್ದಾರೆ, ಬೆಲೆ ನಿಗದಿಪಡಿಸಿದ್ದಾರೆ ಮತ್ತು ಅನುವಾದಿಸಿದ್ದಾರೆ — ಇಲ್ಲಿಯವರೆಗೆ ಏನು ತಯಾರಾಗಿದೆ ಎಂದು ನೋಡಿ.',
   'marketplace.emptyTitle': 'ಇಲ್ಲಿ ಇನ್ನೂ ಯಾವುದೇ ಉತ್ಪನ್ನಗಳಿಲ್ಲ',
@@ -626,7 +626,7 @@ const KN: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'ಹೋವರ್‌ನಲ್ಲಿ ಓದುವಿಕೆ: ಆನ್',
   'a11y.readOnHoverOff': 'ಹೋವರ್‌ನಲ್ಲಿ ಓದುವಿಕೆ: ಆಫ್',
 
-  'footer.tagline': 'ಕಾರೀಗರ್ AI — ಒಂದು ಹ್ಯಾಕಥಾನ್ ಪರಿಕಲ್ಪನೆ. "ನೀವು ಕರಕುಶಲತೆ ಮಾಡಿ. ನಾವು ಡಿಜಿಟಲ್ ಜಗತ್ತನ್ನು ನಿಭಾಯಿಸುತ್ತೇವೆ."',
+  'footer.tagline': 'ಕಾರವಾನ್ AI — ಒಂದು ಹ್ಯಾಕಥಾನ್ ಪರಿಕಲ್ಪನೆ. "ನೀವು ಕರಕುಶಲತೆ ಮಾಡಿ. ನಾವು ಡಿಜಿಟಲ್ ಜಗತ್ತನ್ನು ನಿಭಾಯಿಸುತ್ತೇವೆ."',
 };
 
 const TA: Record<UIStringKey, string> = {
@@ -778,7 +778,7 @@ const TA: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'இந்த சந்தைகளுடன் இன்னும் இணைக்கப்படவில்லை — நீங்கள் தயாராக இருக்கும்போது உங்கள் பட்டியல் தயாராக உள்ளது.',
   'dashboard.celebration': '🎉 நீங்கள் கைவினை செய்யுங்கள். நாங்கள் டிஜிட்டல் உலகைக் கவனிப்போம்.',
 
-  'marketplace.eyebrow': 'கரிகர் சந்தை',
+  'marketplace.eyebrow': 'கர்வான் சந்தை',
   'marketplace.title': 'கைவினைஞரிடமிருந்து நேரடியாக கையால் செய்யப்பட்டவற்றை வாங்குங்கள்',
   'marketplace.subtitle': 'இங்குள்ள ஒவ்வொரு பட்டியலும் ஒரு கரிகர் AI கருவியைப் பயன்படுத்தி எழுதப்பட்டது, விலை நிர்ணயிக்கப்பட்டது, மொழிபெயர்க்கப்பட்டது — இதுவரை என்ன செய்யப்பட்டுள்ளது என்பதைப் பாருங்கள்.',
   'marketplace.emptyTitle': 'இங்கு இன்னும் பொருட்கள் இல்லை',
@@ -832,7 +832,7 @@ const TA: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'ஹோவர் வாசிப்பு: இயக்கத்தில்',
   'a11y.readOnHoverOff': 'ஹோவர் வாசிப்பு: நிறுத்தப்பட்டது',
 
-  'footer.tagline': 'கரிகர் AI — ஒரு ஹேக்கத்தான் கருத்து. "நீங்கள் கைவினை செய்யுங்கள். நாங்கள் டிஜிட்டல் உலகைக் கவனிப்போம்."',
+  'footer.tagline': 'கர்வான் AI — ஒரு ஹேக்கத்தான் கருத்து. "நீங்கள் கைவினை செய்யுங்கள். நாங்கள் டிஜிட்டல் உலகைக் கவனிப்போம்."',
 };
 
 const ML: Record<UIStringKey, string> = {
@@ -984,7 +984,7 @@ const ML: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'ഈ മാർക്കറ്റ്‌പ്ലേസുകളുമായി ഇതുവരെ ബന്ധിപ്പിച്ചിട്ടില്ല — നിങ്ങൾ തയ്യാറാകുമ്പോൾ നിങ്ങളുടെ ലിസ്റ്റിംഗ് തയ്യാറാണ്.',
   'dashboard.celebration': '🎉 നിങ്ങൾ കരകൗശലം ചെയ്യുക. ഞങ്ങൾ ഡിജിറ്റൽ ലോകം കൈകാര്യം ചെയ്യും.',
 
-  'marketplace.eyebrow': 'കരിഗർ മാർക്കറ്റ്‌പ്ലേസ്',
+  'marketplace.eyebrow': 'കാർവാൻ മാർക്കറ്റ്‌പ്ലേസ്',
   'marketplace.title': 'കരകൗശല വിദഗ്ധനിൽ നിന്ന് നേരിട്ട് കൈനിർമ്മിതം വാങ്ങുക',
   'marketplace.subtitle': 'ഇവിടെയുള്ള ഓരോ ലിസ്റ്റിംഗും ഒരു കരിഗർ AI ടൂൾ ഉപയോഗിച്ച് എഴുതിയതും വില നിശ്ചയിച്ചതും വിവർത്തനം ചെയ്തതുമാണ് — ഇതുവരെ എന്താണ് നിർമ്മിച്ചതെന്ന് നോക്കുക.',
   'marketplace.emptyTitle': 'ഇവിടെ ഇതുവരെ ഉൽപ്പന്നങ്ങളൊന്നുമില്ല',
@@ -1038,7 +1038,7 @@ const ML: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'ഹോവർ വായന: ഓൺ',
   'a11y.readOnHoverOff': 'ഹോവർ വായന: ഓഫ്',
 
-  'footer.tagline': 'കരിഗർ AI — ഒരു ഹാക്കത്തോൺ ആശയം. "നിങ്ങൾ കരകൗശലം ചെയ്യുക. ഞങ്ങൾ ഡിജിറ്റൽ ലോകം കൈകാര്യം ചെയ്യും."',
+  'footer.tagline': 'കാർവാൻ AI — ഒരു ഹാക്കത്തോൺ ആശയം. "നിങ്ങൾ കരകൗശലം ചെയ്യുക. ഞങ്ങൾ ഡിജിറ്റൽ ലോകം കൈകാര്യം ചെയ്യും."',
 };
 
 const MR: Record<UIStringKey, string> = {
@@ -1190,7 +1190,7 @@ const MR: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'या मार्केटप्लेसशी अजून जोडलेले नाही — तुम्ही तयार असाल तेव्हा तुमची यादी तयार आहे.',
   'dashboard.celebration': '🎉 तुम्ही हस्तकला करा. आम्ही डिजिटल जग सांभाळू.',
 
-  'marketplace.eyebrow': 'कारीगर मार्केटप्लेस',
+  'marketplace.eyebrow': 'कारवां मार्केटप्लेस',
   'marketplace.title': 'कारागिराकडून थेट हस्तनिर्मित वस्तू खरेदी करा',
   'marketplace.subtitle': 'येथील प्रत्येक यादी एका कारागिराने AI टूल वापरून लिहिली, किंमत ठरवली आणि भाषांतरित केली आहे — आतापर्यंत काय बनवले आहे ते पहा.',
   'marketplace.emptyTitle': 'येथे अजून कोणतीही उत्पादने नाहीत',
@@ -1244,7 +1244,7 @@ const MR: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'होवरवर वाचन: सुरू',
   'a11y.readOnHoverOff': 'होवरवर वाचन: बंद',
 
-  'footer.tagline': 'कारीगर AI — एक हॅकाथॉन संकल्पना. "तुम्ही हस्तकला करा. आम्ही डिजिटल जग सांभाळू."',
+  'footer.tagline': 'कारवां AI — एक हॅकाथॉन संकल्पना. "तुम्ही हस्तकला करा. आम्ही डिजिटल जग सांभाळू."',
 };
 
 const PA: Record<UIStringKey, string> = {
@@ -1396,7 +1396,7 @@ const PA: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'ਇਹਨਾਂ ਮਾਰਕੀਟਪਲੇਸਾਂ ਨਾਲ ਅਜੇ ਨਹੀਂ ਜੁੜਿਆ — ਤੁਹਾਡੀ ਸੂਚੀ ਤਿਆਰ ਹੈ ਜਦੋਂ ਵੀ ਤੁਸੀਂ ਤਿਆਰ ਹੋ।',
   'dashboard.celebration': '🎉 ਤੁਸੀਂ ਕਲਾ ਬਣਾਓ। ਅਸੀਂ ਡਿਜੀਟਲ ਦੁਨੀਆ ਸੰਭਾਲਾਂਗੇ।',
 
-  'marketplace.eyebrow': 'ਕਾਰੀਗਰ ਮਾਰਕੀਟਪਲੇਸ',
+  'marketplace.eyebrow': 'ਕਾਰਵਾਂ ਮਾਰਕੀਟਪਲੇਸ',
   'marketplace.title': 'ਕਾਰੀਗਰ ਤੋਂ ਸਿੱਧਾ ਹੱਥ ਨਾਲ ਬਣਿਆ ਖਰੀਦੋ',
   'marketplace.subtitle': 'ਇੱਥੇ ਹਰ ਸੂਚੀ ਇੱਕ ਕਾਰੀਗਰ ਦੁਆਰਾ AI ਟੂਲ ਵਰਤ ਕੇ ਲਿਖੀ, ਕੀਮਤ ਤੈਅ ਕੀਤੀ ਅਤੇ ਅਨੁਵਾਦ ਕੀਤੀ ਗਈ ਹੈ — ਹੁਣ ਤੱਕ ਕੀ ਬਣਿਆ ਹੈ ਦੇਖੋ।',
   'marketplace.emptyTitle': 'ਇੱਥੇ ਅਜੇ ਕੋਈ ਉਤਪਾਦ ਨਹੀਂ ਹੈ',
@@ -1450,7 +1450,7 @@ const PA: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'ਹੋਵਰ \'ਤੇ ਪੜ੍ਹਨਾ: ਚਾਲੂ',
   'a11y.readOnHoverOff': 'ਹੋਵਰ \'ਤੇ ਪੜ੍ਹਨਾ: ਬੰਦ',
 
-  'footer.tagline': 'ਕਾਰੀਗਰ AI — ਇੱਕ ਹੈਕਾਥੌਨ ਸੰਕਲਪ। "ਤੁਸੀਂ ਕਲਾ ਬਣਾਓ। ਅਸੀਂ ਡਿਜੀਟਲ ਦੁਨੀਆ ਸੰਭਾਲਾਂਗੇ।"',
+  'footer.tagline': 'ਕਾਰਵਾਂ AI — ਇੱਕ ਹੈਕਾਥੌਨ ਸੰਕਲਪ। "ਤੁਸੀਂ ਕਲਾ ਬਣਾਓ। ਅਸੀਂ ਡਿਜੀਟਲ ਦੁਨੀਆ ਸੰਭਾਲਾਂਗੇ।"',
 };
 
 const ES: Record<UIStringKey, string> = {
@@ -1602,7 +1602,7 @@ const ES: Record<UIStringKey, string> = {
   'dashboard.exportNote': 'Aún no conectado a estos mercados — tu anuncio está formateado y listo cuando tú lo estés.',
   'dashboard.celebration': '🎉 Tú haces la artesanía. Nosotros nos encargamos del mundo digital.',
 
-  'marketplace.eyebrow': 'Mercado Karigar',
+  'marketplace.eyebrow': 'Mercado Karvaan',
   'marketplace.title': 'Compra Artesanía, Directamente del Artesano',
   'marketplace.subtitle': 'Cada anuncio aquí fue escrito, valorado y traducido por un karigar usando la herramienta de IA — explora lo que se ha hecho hasta ahora.',
   'marketplace.emptyTitle': 'Aún no hay productos aquí',
@@ -1656,7 +1656,7 @@ const ES: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': 'Leer al pasar cursor: Activado',
   'a11y.readOnHoverOff': 'Leer al pasar cursor: Desactivado',
 
-  'footer.tagline': 'Karigar AI — un concepto de hackathon. "Tú haces la artesanía. Nosotros nos encargamos del mundo digital."',
+  'footer.tagline': 'Karvaan AI — un concepto de hackathon. "Tú haces la artesanía. Nosotros nos encargamos del mundo digital."',
 };
 
 const ZH: Record<UIStringKey, string> = {
@@ -1808,7 +1808,7 @@ const ZH: Record<UIStringKey, string> = {
   'dashboard.exportNote': '尚未连接到这些集市 — 你的商品列表已格式化，随时可用。',
   'dashboard.celebration': '🎉 你专注手艺，我们负责数字世界。',
 
-  'marketplace.eyebrow': 'Karigar 集市',
+  'marketplace.eyebrow': 'Karvaan 集市',
   'marketplace.title': '直接向手艺人购买手工制品',
   'marketplace.subtitle': '这里的每一条商品列表都是一位手艺人使用 AI 工具撰写、定价并翻译的 — 来看看目前已经做出了什么。',
   'marketplace.emptyTitle': '这里还没有产品',
@@ -1862,7 +1862,7 @@ const ZH: Record<UIStringKey, string> = {
   'a11y.readOnHoverOn': '悬停朗读：开启',
   'a11y.readOnHoverOff': '悬停朗读：关闭',
 
-  'footer.tagline': 'Karigar AI — 一个黑客马拉松概念项目。"你专注手艺，我们负责数字世界。"',
+  'footer.tagline': 'Karvaan AI — 一个黑客马拉松概念项目。"你专注手艺，我们负责数字世界。"',
 };
 
 export const UI_STRINGS: Record<Language, Record<UIStringKey, string>> = {

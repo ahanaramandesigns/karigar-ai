@@ -1,8 +1,8 @@
-# Karigar AI
+# Karvaan AI
 
 **"Can an artisan become globally visible without becoming digitally fluent?"**
 
-Karigar AI turns one product photo and a short spoken or typed story into a complete, professional, multilingual, marketplace-ready product listing — no writing, pricing, translation, or marketing skills required.
+Karvaan AI turns one product photo and a short spoken or typed story into a complete, professional, multilingual, marketplace-ready product listing — no writing, pricing, translation, or marketing skills required.
 
 > *You make the craft. We handle the digital world.*
 

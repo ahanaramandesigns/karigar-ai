@@ -462,7 +462,7 @@ function Header({
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-terracotta-500 text-white">
             <Sparkles size={16} />
           </div>
-          <span className="font-display text-lg font-bold text-ink-900">Karigar AI</span>
+          <span className="font-display text-lg font-bold text-ink-900">Karvaan AI</span>
         </button>
         <div className="flex items-center gap-2">
           <button

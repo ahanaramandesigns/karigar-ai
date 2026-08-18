@@ -9,7 +9,7 @@ export function buildExportText(state: AppState): string {
   const lines: string[] = [];
 
   lines.push('='.repeat(60));
-  lines.push('KARIGAR AI — MARKETPLACE-READY PRODUCT LISTING');
+  lines.push('KARVAAN AI — MARKETPLACE-READY PRODUCT LISTING');
   lines.push('='.repeat(60));
   lines.push('');
   lines.push(`TITLE: ${listing.title}`);
@@ -78,7 +78,7 @@ export function buildExportText(state: AppState): string {
   }
 
   lines.push('='.repeat(60));
-  lines.push('Generated with Karigar AI — "You make the craft. We handle the digital world."');
+  lines.push('Generated with Karvaan AI — "You make the craft. We handle the digital world."');
   lines.push('='.repeat(60));
 
   return lines.join('\n');
@@ -91,7 +91,7 @@ export function downloadListing(state: AppState) {
   const a = document.createElement('a');
   const safeName = (state.listing?.title || 'product-listing').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
   a.href = url;
-  a.download = `${safeName}-karigar-listing.txt`;
+  a.download = `${safeName}-karvaan-listing.txt`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

@@ -1,4 +1,4 @@
-// Core domain types for Karigar AI
+// Core domain types for Karvaan AI
 
 export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'pa' | 'es' | 'zh';
 
