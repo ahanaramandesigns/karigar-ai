@@ -272,6 +272,7 @@ export default function App() {
               key="landing"
               onStart={() => goto(2)}
               onTryDemo={loadDemo}
+              onGoToMarketplace={goToMarketplace}
               selectedLanguages={state.selectedLanguages}
               uiLanguage={state.uiLanguage}
               onChooseLanguages={chooseLanguages}
@@ -389,7 +390,7 @@ export default function App() {
 
           {state.screen === 10 && (
             <div key="marketplace" className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
-              <Marketplace products={marketplaceProducts} onSelect={viewProduct} onBack={() => goto(9)} />
+              <Marketplace products={marketplaceProducts} onSelect={viewProduct} onBack={() => goto(state.listing ? 9 : 1)} />
             </div>
           )}
 

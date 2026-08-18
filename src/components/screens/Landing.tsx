@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { Camera, Ear, EarOff, Globe2, Mic, Sparkles, Tags, Wand2 } from 'lucide-react';
-import { PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
+import { Camera, Ear, EarOff, Globe2, Mic, Sparkles, Store, Tags, Wand2 } from 'lucide-react';
+import { GhostButton, PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
 import { DEMO_IMAGE_URL } from '../../data/demoData';
 import { LANGUAGE_LABELS, SPEECH_LOCALES, type Language } from '../../types';
 import { useT } from '../../i18n/I18nContext';
@@ -8,6 +8,7 @@ import { useT } from '../../i18n/I18nContext';
 interface Props {
   onStart: () => void;
   onTryDemo: () => void;
+  onGoToMarketplace: () => void;
   selectedLanguages: Language[];
   uiLanguage: Language;
   onChooseLanguages: (langs: Language[], justSelected?: Language) => void;
@@ -15,7 +16,16 @@ interface Props {
   onToggleReadOnHover: () => void;
 }
 
-export function Landing({ onStart, onTryDemo, selectedLanguages, uiLanguage, onChooseLanguages, readOnHover, onToggleReadOnHover }: Props) {
+export function Landing({
+  onStart,
+  onTryDemo,
+  onGoToMarketplace,
+  selectedLanguages,
+  uiLanguage,
+  onChooseLanguages,
+  readOnHover,
+  onToggleReadOnHover,
+}: Props) {
   const t = useT();
   const uiLang = uiLanguage;
 
@@ -104,7 +114,7 @@ export function Landing({ onStart, onTryDemo, selectedLanguages, uiLanguage, onC
           <p className="mx-auto mt-5 max-w-lg text-lg text-ink-700/80 lg:mx-0">
             {t('landing.heroSubtitlePrefix')} <span className="font-semibold text-ink-900">{t('landing.heroSubtitleBold')}</span>
           </p>
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
             <PrimaryButton onClick={onStart} className="w-full sm:w-auto">
               <Wand2 size={20} />
               {t('landing.ctaStart')}
@@ -112,6 +122,10 @@ export function Landing({ onStart, onTryDemo, selectedLanguages, uiLanguage, onC
             <SecondaryButton onClick={onTryDemo} className="w-full sm:w-auto">
               {t('landing.ctaDemo')}
             </SecondaryButton>
+            <GhostButton onClick={onGoToMarketplace} className="w-full border-2 border-teal-200 sm:w-auto">
+              <Store size={18} />
+              {t('landing.ctaMarketplace')}
+            </GhostButton>
           </div>
           <p className="mt-4 text-sm text-ink-700/50">{t('landing.helper')}</p>
         </div>
