@@ -106,4 +106,33 @@ export interface AppState {
   translations: Partial<Record<Language, TranslatedListing>>;
   marketing: MarketingAssets | null;
   isDemoMode: boolean;
+  marketplaceId: string | null;
+}
+
+// A finished listing, published to the shared marketplace so consumers can
+// browse and buy it. Stored client-side (see src/data/marketplace.ts) — see
+// that file's header comment for what that does and doesn't mean.
+export interface MarketplaceProduct {
+  id: string;
+  imageDataUrl: string;
+  title: string;
+  shortDescription: string;
+  detailedDescription: string;
+  artisanStory: string;
+  category: string;
+  keywords: string[];
+  price: number;
+  createdAt: number;
+}
+
+export interface Order {
+  id: string;
+  product: MarketplaceProduct;
+  quantity: number;
+  subtotal: number;
+  shipping: number;
+  total: number;
+  paymentMethod: 'card' | 'upi' | 'cod';
+  shippingName: string;
+  createdAt: number;
 }

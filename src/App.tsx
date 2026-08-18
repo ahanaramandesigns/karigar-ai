@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { ProgressStepper } from './components/ProgressStepper';
@@ -11,6 +11,10 @@ import { Pricing } from './components/screens/Pricing';
 import { Multilingual } from './components/screens/Multilingual';
 import { Marketing } from './components/screens/Marketing';
 import { Dashboard } from './components/screens/Dashboard';
+import { Marketplace } from './components/screens/Marketplace';
+import { ProductDetail } from './components/screens/ProductDetail';
+import { Checkout } from './components/screens/Checkout';
+import { OrderConfirmation } from './components/screens/OrderConfirmation';
 import {
   analyzeProductImage,
   computePricing,
@@ -19,8 +23,9 @@ import {
   translateListing,
 } from './services/aiService';
 import { downloadListing } from './services/exportListing';
+import { loadMarketplaceProducts, makeId, publishListingToMarketplace } from './data/marketplace';
 import { DEMO_ANALYSIS, DEMO_IMAGE_URL, DEMO_PRODUCT_NAME, DEMO_STORY } from './data/demoData';
-import type { AppState, ArtisanStory, Language, ProductAnalysis, ProductListing } from './types';
+import type { AppState, ArtisanStory, Language, Order, ProductAnalysis, ProductListing } from './types';
 
 const EMPTY_STORY: ArtisanStory = { materials: '', timeToMake: '', traditionStory: '', origin: '' };
 
@@ -39,6 +44,7 @@ const INITIAL_STATE: AppState = {
   translations: {},
   marketing: null,
   isDemoMode: false,
+  marketplaceId: null,
 };
 
 export default function App() {
@@ -48,6 +54,11 @@ export default function App() {
   const [translateLoading, setTranslateLoading] = useState(false);
   const [marketingLoading, setMarketingLoading] = useState(false);
   const [listingVariant, setListingVariant] = useState(0);
+
+  const [marketplaceProducts, setMarketplaceProducts] = useState(() => loadMarketplaceProducts());
+  const [viewingProductId, setViewingProductId] = useState<string | null>(null);
+  const [checkoutQuantity, setCheckoutQuantity] = useState(1);
+  const [lastOrder, setLastOrder] = useState<Order | null>(null);
 
   const patch = (p: Partial<AppState>) => setState((s) => ({ ...s, ...p }));
   const goto = (screen: number) => {
@@ -141,6 +152,55 @@ export default function App() {
   };
 
   const startOver = () => setState(INITIAL_STATE);
+
+  // Publish the finished listing to the shared marketplace as soon as the
+  // artisan reaches the Dashboard. Reuses the same marketplaceId on repeat
+  // visits so it updates in place rather than creating duplicates.
+  useEffect(() => {
+    if (state.screen !== 9 || !state.listing || !state.imageDataUrl) return;
+    const id = state.marketplaceId ?? makeId();
+    if (!state.marketplaceId) patch({ marketplaceId: id });
+    publishListingToMarketplace(id, state);
+    setMarketplaceProducts(loadMarketplaceProducts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.screen]);
+
+  const goToMarketplace = () => {
+    setMarketplaceProducts(loadMarketplaceProducts());
+    setViewingProductId(null);
+    goto(10);
+  };
+
+  const viewProduct = (id: string) => {
+    setViewingProductId(id);
+    goto(11);
+  };
+
+  const buyNow = (quantity: number) => {
+    setCheckoutQuantity(quantity);
+    goto(12);
+  };
+
+  const viewingProduct = marketplaceProducts.find((p) => p.id === viewingProductId) ?? null;
+
+  const placeOrder = (details: { shippingName: string; paymentMethod: 'card' | 'upi' | 'cod' }) => {
+    if (!viewingProduct) return;
+    const subtotal = viewingProduct.price * checkoutQuantity;
+    const shipping = subtotal >= 999 ? 0 : 49;
+    const order: Order = {
+      id: makeId().slice(0, 8).toUpperCase(),
+      product: viewingProduct,
+      quantity: checkoutQuantity,
+      subtotal,
+      shipping,
+      total: subtotal + shipping,
+      paymentMethod: details.paymentMethod,
+      shippingName: details.shippingName,
+      createdAt: Date.now(),
+    };
+    setLastOrder(order);
+    goto(13);
+  };
 
   return (
     <div className="min-h-screen bg-cream-50">
@@ -264,7 +324,45 @@ export default function App() {
 
           {state.screen === 9 && (
             <div key="dashboard" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
-              <Dashboard state={state} onExport={() => downloadListing(state)} onStartOver={startOver} />
+              <Dashboard
+                state={state}
+                onExport={() => downloadListing(state)}
+                onStartOver={startOver}
+                onGoToMarketplace={goToMarketplace}
+              />
+            </div>
+          )}
+
+          {state.screen === 10 && (
+            <div key="marketplace" className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+              <Marketplace products={marketplaceProducts} onSelect={viewProduct} onBack={() => goto(9)} />
+            </div>
+          )}
+
+          {state.screen === 11 && viewingProduct && (
+            <div key="product-detail" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
+              <ProductDetail product={viewingProduct} onBuyNow={buyNow} onBack={() => goto(10)} />
+            </div>
+          )}
+
+          {state.screen === 12 && viewingProduct && (
+            <div key="checkout" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
+              <Checkout
+                product={viewingProduct}
+                quantity={checkoutQuantity}
+                onPlaceOrder={placeOrder}
+                onBack={() => goto(11)}
+              />
+            </div>
+          )}
+
+          {state.screen === 13 && lastOrder && (
+            <div key="order-confirmation" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
+              <OrderConfirmation
+                order={lastOrder}
+                onContinueShopping={goToMarketplace}
+                onBackToHome={startOver}
+              />
             </div>
           )}
         </AnimatePresence>

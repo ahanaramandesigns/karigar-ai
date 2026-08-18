@@ -7,9 +7,10 @@ interface Props {
   state: AppState;
   onExport: () => void;
   onStartOver: () => void;
+  onGoToMarketplace: () => void;
 }
 
-export function Dashboard({ state, onExport, onStartOver }: Props) {
+export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: Props) {
   const { imageDataUrl, listing, pricing, finalPrice, translations, marketing, selectedLanguages } = state;
   const price = finalPrice ?? pricing?.recommended;
 
@@ -52,6 +53,10 @@ export function Dashboard({ state, onExport, onStartOver }: Props) {
           <SecondaryButton onClick={onStartOver} className="w-full">
             <RotateCcw size={16} />
             Start a New Product
+          </SecondaryButton>
+          <SecondaryButton onClick={onGoToMarketplace} className="w-full">
+            <Store size={16} />
+            Take Me to Marketplace
           </SecondaryButton>
         </div>
 
