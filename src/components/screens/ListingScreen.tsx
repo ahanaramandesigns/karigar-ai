@@ -1,5 +1,5 @@
 import { Loader2, RefreshCw, ScrollText, Sparkles, X } from 'lucide-react';
-import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SecondaryButton } from '../ui';
+import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
 import type { ProductListing } from '../../types';
 
 interface Props {
@@ -37,7 +37,10 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
 
       <Card className="mx-auto max-w-3xl space-y-6">
         <div>
-          <FieldLabel>Product title</FieldLabel>
+          <div className="flex items-center gap-1.5">
+            <FieldLabel>Product title</FieldLabel>
+            <SpeakButton text={listing.title} className="-mt-2" />
+          </div>
           <input
             value={listing.title}
             onChange={(e) => onChange({ ...listing, title: e.target.value })}
@@ -46,7 +49,10 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
         </div>
 
         <div>
-          <FieldLabel hint="Shown in search results">Short description</FieldLabel>
+          <div className="flex items-center gap-1.5">
+            <FieldLabel hint="Shown in search results">Short description</FieldLabel>
+            <SpeakButton text={listing.shortDescription} className="-mt-2" />
+          </div>
           <textarea
             value={listing.shortDescription}
             onChange={(e) => onChange({ ...listing, shortDescription: e.target.value })}
@@ -56,7 +62,10 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
         </div>
 
         <div>
-          <FieldLabel>Detailed description</FieldLabel>
+          <div className="flex items-center gap-1.5">
+            <FieldLabel>Detailed description</FieldLabel>
+            <SpeakButton text={listing.detailedDescription} className="-mt-2" />
+          </div>
           <textarea
             value={listing.detailedDescription}
             onChange={(e) => onChange({ ...listing, detailedDescription: e.target.value })}
@@ -66,7 +75,10 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
         </div>
 
         <div>
-          <FieldLabel hint="Your own words, preserved">Your craft story</FieldLabel>
+          <div className="flex items-center gap-1.5">
+            <FieldLabel hint="Your own words, preserved">Your craft story</FieldLabel>
+            <SpeakButton text={listing.artisanStory} className="-mt-2" />
+          </div>
           <textarea
             value={listing.artisanStory}
             onChange={(e) => onChange({ ...listing, artisanStory: e.target.value })}

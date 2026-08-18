@@ -1,7 +1,8 @@
 import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, Volume2, VolumeX } from 'lucide-react';
 import { useState } from 'react';
+import { useTextToSpeech } from '../hooks/useTextToSpeech';
 
 export function PrimaryButton({
   children,
@@ -94,9 +95,45 @@ export function EyebrowTitle({
         {icon}
         {eyebrow}
       </div>
-      <h1 className="font-display text-3xl font-semibold leading-tight text-ink-900 sm:text-4xl">{title}</h1>
+      <div className="flex items-center justify-center gap-2">
+        <h1 className="font-display text-3xl font-semibold leading-tight text-ink-900 sm:text-4xl">{title}</h1>
+        <SpeakButton text={subtitle ? `${title}. ${subtitle}` : title} />
+      </div>
       {subtitle && <p className="mx-auto mt-3 max-w-2xl text-base text-ink-700/70 sm:text-lg">{subtitle}</p>}
     </div>
+  );
+}
+
+// Read-aloud button — the counterpart to the mic-based voice input, for
+// people who can't read the screen or can't see it. Speaks `text` using the
+// browser's built-in text-to-speech. Renders nothing if unsupported or if
+// there's no text to read, so it never leaves a dead control behind.
+export function SpeakButton({
+  text,
+  lang = 'en-IN',
+  className = '',
+  size = 14,
+}: {
+  text: string | null | undefined;
+  lang?: string;
+  className?: string;
+  size?: number;
+}) {
+  const { isSupported, isSpeaking, speak, stop } = useTextToSpeech();
+  if (!isSupported || !text?.trim()) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => (isSpeaking ? stop() : speak(text, lang))}
+      title={isSpeaking ? 'Stop reading aloud' : 'Read aloud'}
+      aria-label={isSpeaking ? 'Stop reading aloud' : 'Read aloud'}
+      className={`inline-flex shrink-0 items-center justify-center rounded-full p-1.5 text-teal-700 transition-colors hover:bg-teal-50 ${
+        isSpeaking ? 'animate-pulse-ring bg-teal-100' : ''
+      } ${className}`}
+    >
+      {isSpeaking ? <VolumeX size={size} /> : <Volume2 size={size} />}
+    </button>
   );
 }
 

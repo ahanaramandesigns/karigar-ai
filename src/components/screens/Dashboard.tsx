@@ -1,5 +1,5 @@
 import { CheckCircle2, Download, Globe2, RotateCcw, ShoppingBag, Store } from 'lucide-react';
-import { Card, EyebrowTitle, PrimaryButton, SecondaryButton } from '../ui';
+import { Card, EyebrowTitle, PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
 import { LANGUAGE_LABELS } from '../../types';
 import type { AppState } from '../../types';
 
@@ -30,7 +30,10 @@ export function Dashboard({ state, onExport, onStartOver }: Props) {
             </Card>
           )}
           <Card>
-            <p className="text-xs font-bold uppercase tracking-wide text-ink-700/50">Starting price</p>
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-bold uppercase tracking-wide text-ink-700/50">Starting price</p>
+              {price != null && <SpeakButton text={`Starting price: ${price} rupees`} />}
+            </div>
             <p className="font-display text-3xl font-semibold text-terracotta-600">
               {price ? `₹${price.toLocaleString('en-IN')}` : '—'}
             </p>
@@ -54,7 +57,14 @@ export function Dashboard({ state, onExport, onStartOver }: Props) {
 
         <div className="space-y-6">
           <Card>
-            <h3 className="font-display text-xl font-semibold text-ink-900">{listing?.title}</h3>
+            <div className="flex items-start justify-between gap-2">
+              <h3 className="font-display text-xl font-semibold text-ink-900">{listing?.title}</h3>
+              <SpeakButton
+                text={[listing?.title, listing?.shortDescription, listing?.detailedDescription, listing?.artisanStory]
+                  .filter(Boolean)
+                  .join('. ')}
+              />
+            </div>
             <p className="mt-2 text-sm text-ink-700/80">{listing?.shortDescription}</p>
             <p className="mt-3 text-sm text-ink-700/70">{listing?.detailedDescription}</p>
             <div className="mt-4 rounded-xl border border-teal-200 bg-teal-50/50 p-3 text-sm italic text-teal-900">

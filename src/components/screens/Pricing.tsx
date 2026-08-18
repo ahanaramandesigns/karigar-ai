@@ -1,5 +1,5 @@
 import { IndianRupee, Sparkles } from 'lucide-react';
-import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton } from '../ui';
+import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SpeakButton } from '../ui';
 import type { PricingInputs, PricingResult } from '../../types';
 
 interface Props {
@@ -85,7 +85,15 @@ export function Pricing({ inputs, onInputsChange, pricing, finalPrice, onFinalPr
         </Card>
 
         <div className="rounded-3xl border border-teal-900 bg-teal-800 p-6 text-cream-50 shadow-sm sm:p-8">
-          <h3 className="mb-1 font-display text-lg font-semibold">Suggested price</h3>
+          <div className="mb-1 flex items-center gap-1.5">
+            <h3 className="font-display text-lg font-semibold">Suggested price</h3>
+            {pricing && (
+              <SpeakButton
+                text={`Suggested price range: ${pricing.low} to ${pricing.high} rupees. ${pricing.explanation.join('. ')}`}
+                className="text-cream-100 hover:bg-white/10"
+              />
+            )}
+          </div>
           <p className="mb-5 text-xs text-teal-100/80">This is an AI-assisted estimate — you have final control.</p>
 
           {pricing && (

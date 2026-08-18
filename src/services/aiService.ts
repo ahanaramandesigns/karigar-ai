@@ -324,6 +324,13 @@ const L10N: Record<Language, Localized> = {
     originalStoryLabel: 'Historia del artesano (idioma original)',
     categoryLabel: 'Categoría',
   },
+  zh: {
+    by: '由传统工匠手工制作',
+    handmadeWith: '手工制作，所用材料：',
+    approxTime: '大致制作时间',
+    originalStoryLabel: '工匠的故事（原始语言）',
+    categoryLabel: '类别',
+  },
 };
 
 export async function translateListing(opts: {

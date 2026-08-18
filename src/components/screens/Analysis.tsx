@@ -1,5 +1,5 @@
 import { ScanEye, Sparkles, Loader2 } from 'lucide-react';
-import { Card, ConfidenceBadge, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton } from '../ui';
+import { Card, ConfidenceBadge, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SpeakButton } from '../ui';
 import type { ProductAnalysis } from '../../types';
 
 interface Props {
@@ -56,7 +56,10 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
             <div className="space-y-5">
               <div>
                 <div className="mb-1 flex items-center justify-between">
-                  <FieldLabel>Category</FieldLabel>
+                  <div className="flex items-center gap-1.5">
+                    <FieldLabel>Category</FieldLabel>
+                    <SpeakButton text={`Category: ${analysis.category}`} className="-mt-2" />
+                  </div>
                   <ConfidenceBadge level="estimated" />
                 </div>
                 <input
@@ -103,9 +106,12 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
                 />
               </div>
 
-              <p className="rounded-xl bg-ochre-50 px-4 py-3 text-xs text-ochre-800">
-                <strong>Note:</strong> {analysis.notes}
-              </p>
+              <div className="flex items-start justify-between gap-2 rounded-xl bg-ochre-50 px-4 py-3">
+                <p className="text-xs text-ochre-800">
+                  <strong>Note:</strong> {analysis.notes}
+                </p>
+                <SpeakButton text={analysis.notes} />
+              </div>
             </div>
           )}
         </Card>

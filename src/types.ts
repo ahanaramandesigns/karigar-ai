@@ -1,6 +1,6 @@
 // Core domain types for Karigar AI
 
-export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'es';
+export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'es' | 'zh';
 
 export const LANGUAGE_LABELS: Record<Language, { name: string; native: string; flag: string }> = {
   en: { name: 'English', native: 'English', flag: '🇬🇧' },
@@ -10,6 +10,20 @@ export const LANGUAGE_LABELS: Record<Language, { name: string; native: string; f
   ml: { name: 'Malayalam', native: 'മലയാളം', flag: '🇮🇳' },
   mr: { name: 'Marathi', native: 'मराठी', flag: '🇮🇳' },
   es: { name: 'Spanish', native: 'Español', flag: '🇪🇸' },
+  zh: { name: 'Mandarin', native: '中文', flag: '🇨🇳' },
+};
+
+// BCP-47 locale tags used to pick a text-to-speech voice (Web Speech
+// SpeechSynthesis) matching each listing language — see useTextToSpeech.
+export const SPEECH_LOCALES: Record<Language, string> = {
+  en: 'en-IN',
+  hi: 'hi-IN',
+  kn: 'kn-IN',
+  ta: 'ta-IN',
+  ml: 'ml-IN',
+  mr: 'mr-IN',
+  es: 'es-ES',
+  zh: 'zh-CN',
 };
 
 export interface ArtisanStory {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Globe2, Loader2, Sparkles } from 'lucide-react';
-import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton } from '../ui';
-import { LANGUAGE_LABELS, type Language, type TranslatedListing } from '../../types';
+import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton, SpeakButton } from '../ui';
+import { LANGUAGE_LABELS, SPEECH_LOCALES, type Language, type TranslatedListing } from '../../types';
 
 interface Props {
   selectedLanguages: Language[];
@@ -75,19 +75,31 @@ export function Multilingual({ selectedLanguages, onToggleLanguage, translations
               <div className="space-y-4 rounded-2xl bg-cream-100 p-5">
                 <div className="flex items-start justify-between gap-3">
                   <h4 className="font-display text-lg font-semibold text-ink-900">{active.title}</h4>
-                  <CopyButton text={active.title} />
+                  <div className="flex shrink-0 items-center gap-1">
+                    <SpeakButton text={active.title} lang={SPEECH_LOCALES[active.language]} />
+                    <CopyButton text={active.title} />
+                  </div>
                 </div>
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-sm text-ink-800">{active.shortDescription}</p>
-                  <CopyButton text={active.shortDescription} />
+                  <div className="flex shrink-0 items-center gap-1">
+                    <SpeakButton text={active.shortDescription} lang={SPEECH_LOCALES[active.language]} />
+                    <CopyButton text={active.shortDescription} />
+                  </div>
                 </div>
                 <div className="flex items-start justify-between gap-3">
                   <p className="text-sm text-ink-700/80">{active.detailedDescription}</p>
-                  <CopyButton text={active.detailedDescription} />
+                  <div className="flex shrink-0 items-center gap-1">
+                    <SpeakButton text={active.detailedDescription} lang={SPEECH_LOCALES[active.language]} />
+                    <CopyButton text={active.detailedDescription} />
+                  </div>
                 </div>
                 <div className="flex items-start justify-between gap-3 rounded-xl border border-teal-200 bg-teal-50/60 p-3">
                   <p className="text-sm italic text-teal-900">{active.artisanStory}</p>
-                  <CopyButton text={active.artisanStory} />
+                  <div className="flex shrink-0 items-center gap-1">
+                    <SpeakButton text={active.artisanStory} lang={SPEECH_LOCALES[active.language]} />
+                    <CopyButton text={active.artisanStory} />
+                  </div>
                 </div>
               </div>
             )}

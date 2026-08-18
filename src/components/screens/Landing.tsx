@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Camera, Globe2, Mic, Sparkles, Tags, Wand2 } from 'lucide-react';
-import { PrimaryButton, SecondaryButton } from '../ui';
+import { PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
 import { DEMO_IMAGE_URL } from '../../data/demoData';
 
 export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo: () => void }) {
@@ -12,10 +12,16 @@ export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo
           <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-ochre-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-ochre-700">
             <Sparkles size={14} /> Heritage meets technology
           </div>
-          <h1 className="font-display text-4xl font-semibold leading-[1.1] text-ink-900 sm:text-5xl lg:text-6xl">
-            Turn Your Craft Into a{' '}
-            <span className="text-terracotta-500">Global Story</span>
-          </h1>
+          <div className="flex items-center justify-center gap-2 lg:justify-start">
+            <h1 className="font-display text-4xl font-semibold leading-[1.1] text-ink-900 sm:text-5xl lg:text-6xl">
+              Turn Your Craft Into a{' '}
+              <span className="text-terracotta-500">Global Story</span>
+            </h1>
+            <SpeakButton
+              text="Turn Your Craft Into a Global Story. One photo. Your story. AI handles the digital work. No design skills, writing skills, or tech skills needed."
+              size={18}
+            />
+          </div>
           <p className="mx-auto mt-5 max-w-lg text-lg text-ink-700/80 lg:mx-0">
             One photo. Your story. <span className="font-semibold text-ink-900">AI handles the digital work.</span>
           </p>

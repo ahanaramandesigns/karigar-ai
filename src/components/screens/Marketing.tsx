@@ -1,5 +1,5 @@
 import { Camera, Loader2, MessageCircle, Search, Sparkles, Tag, Target } from 'lucide-react';
-import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton } from '../ui';
+import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton, SpeakButton } from '../ui';
 import type { MarketingAssets } from '../../types';
 
 interface Props {
@@ -38,7 +38,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
               <Camera size={16} className="text-terracotta-500" /> Instagram Caption
             </div>
-            <CopyButton text={marketing.instagramCaption} />
+            <div className="flex items-center gap-1">
+              <SpeakButton text={marketing.instagramCaption} />
+              <CopyButton text={marketing.instagramCaption} />
+            </div>
           </div>
           <textarea
             value={marketing.instagramCaption}
@@ -53,7 +56,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
               <MessageCircle size={16} className="text-teal-600" /> WhatsApp Message
             </div>
-            <CopyButton text={marketing.whatsappMessage} />
+            <div className="flex items-center gap-1">
+              <SpeakButton text={marketing.whatsappMessage} />
+              <CopyButton text={marketing.whatsappMessage} />
+            </div>
           </div>
           <textarea
             value={marketing.whatsappMessage}
@@ -77,8 +83,11 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
         </Card>
 
         <Card>
-          <div className="mb-3 flex items-center gap-2 text-sm font-bold text-ink-900">
-            <Target size={16} className="text-terracotta-500" /> Who's it for
+          <div className="mb-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
+              <Target size={16} className="text-terracotta-500" /> Who's it for
+            </div>
+            <SpeakButton text={marketing.targetSegment} />
           </div>
           <p className="text-sm text-ink-700/80">{marketing.targetSegment}</p>
         </Card>
@@ -88,7 +97,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
               <Tag size={16} className="text-terracotta-500" /> Tagline
             </div>
-            <CopyButton text={marketing.tagline} />
+            <div className="flex items-center gap-1">
+              <SpeakButton text={marketing.tagline} />
+              <CopyButton text={marketing.tagline} />
+            </div>
           </div>
           <input
             value={marketing.tagline}

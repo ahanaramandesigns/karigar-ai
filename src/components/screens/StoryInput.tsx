@@ -1,5 +1,5 @@
 import { Mic, MicOff, Sparkles, BookHeart } from 'lucide-react';
-import { Card, EyebrowTitle, FieldLabel, PrimaryButton, GhostButton } from '../ui';
+import { Card, EyebrowTitle, FieldLabel, PrimaryButton, GhostButton, SpeakButton } from '../ui';
 import { useVoiceInput } from '../../hooks/useVoiceInput';
 import type { ArtisanStory } from '../../types';
 
@@ -29,7 +29,10 @@ function QuestionBlock({
 
   return (
     <div className="mb-6 last:mb-0">
-      <FieldLabel>{label}</FieldLabel>
+      <div className="flex items-center gap-1.5">
+        <FieldLabel>{label}</FieldLabel>
+        <SpeakButton text={label} className="-mt-2" />
+      </div>
       <div className="relative">
         <textarea
           value={value}
