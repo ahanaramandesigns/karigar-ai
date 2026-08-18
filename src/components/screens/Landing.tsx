@@ -1,40 +1,119 @@
 import { motion } from 'framer-motion';
-import { Camera, Globe2, Mic, Sparkles, Tags, Wand2 } from 'lucide-react';
+import { Camera, Ear, EarOff, Globe2, Mic, Sparkles, Tags, Wand2 } from 'lucide-react';
 import { PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
 import { DEMO_IMAGE_URL } from '../../data/demoData';
+import { LANGUAGE_LABELS, SPEECH_LOCALES, type Language } from '../../types';
+import { useT } from '../../i18n/I18nContext';
 
-export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo: () => void }) {
+interface Props {
+  onStart: () => void;
+  onTryDemo: () => void;
+  selectedLanguages: Language[];
+  uiLanguage: Language;
+  onChooseLanguages: (langs: Language[], justSelected?: Language) => void;
+  readOnHover: boolean;
+  onToggleReadOnHover: () => void;
+}
+
+export function Landing({ onStart, onTryDemo, selectedLanguages, uiLanguage, onChooseLanguages, readOnHover, onToggleReadOnHover }: Props) {
+  const t = useT();
+  const uiLang = uiLanguage;
+
+  // Local toggle — computes the next array from its own closure per click,
+  // so rapid multi-select clicks never race each other (see App.tsx's
+  // chooseLanguages, which replaces the whole array in one call). Passes
+  // along which language was just turned on, so the site's UI language
+  // switches to it immediately — array order alone can't tell us that,
+  // since the default 'en' stays in the array even after adding more.
+  const toggle = (lang: Language) => {
+    const has = selectedLanguages.includes(lang);
+    const next = has ? selectedLanguages.filter((l) => l !== lang) : [...selectedLanguages, lang];
+    onChooseLanguages(next, has ? undefined : lang);
+  };
+
   return (
     <div className="texture-weave">
+      {/* Language + accessibility — kept first, at the very top */}
+      <section className="border-b border-terracotta-100 bg-white/70 py-10">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-ochre-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-ochre-700">
+            <Globe2 size={14} /> {t('landing.chooseLangEyebrow')}
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="font-display text-2xl font-semibold text-ink-900 sm:text-3xl">{t('landing.chooseLangHeading')}</h2>
+            <SpeakButton text={`${t('landing.chooseLangHeading')}. ${t('landing.chooseLangSubtitle')}`} lang={SPEECH_LOCALES[uiLang]} />
+          </div>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-ink-700/70">{t('landing.chooseLangSubtitle')}</p>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            {(Object.keys(LANGUAGE_LABELS) as Language[]).map((lang) => {
+              const info = LANGUAGE_LABELS[lang];
+              const selected = selectedLanguages.includes(lang);
+              return (
+                <button
+                  key={lang}
+                  onClick={() => toggle(lang)}
+                  aria-pressed={selected}
+                  className={`flex items-center gap-2 rounded-2xl border-2 px-4 py-2.5 text-sm font-semibold transition-colors ${
+                    selected
+                      ? 'border-terracotta-400 bg-terracotta-50 text-terracotta-700'
+                      : 'border-cream-300 bg-white text-ink-700/70 hover:border-terracotta-200'
+                  }`}
+                >
+                  <span className="text-lg">{info.flag}</span>
+                  {info.name}
+                  <span className="text-xs text-ink-700/40">({info.native})</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 flex flex-col items-center gap-2 border-t border-cream-200 pt-5">
+            <button
+              onClick={onToggleReadOnHover}
+              aria-pressed={readOnHover}
+              className={`flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors ${
+                readOnHover ? 'border-teal-600 bg-teal-600 text-white' : 'border-teal-200 bg-white text-teal-700 hover:bg-teal-50'
+              }`}
+            >
+              {readOnHover ? <Ear size={16} /> : <EarOff size={16} />}
+              {t('landing.readOnHoverToggle')}
+            </button>
+            <p className="max-w-md text-xs text-ink-700/50">{t('landing.readOnHoverHint')}</p>
+          </div>
+        </div>
+      </section>
+
       {/* Hero */}
       <section className="mx-auto flex max-w-6xl flex-col items-center gap-10 px-4 pb-16 pt-14 sm:px-6 sm:pt-20 lg:flex-row lg:gap-16">
         <div className="flex-1 text-center lg:text-left">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-ochre-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-ochre-700">
-            <Sparkles size={14} /> Heritage meets technology
+            <Sparkles size={14} /> {t('landing.eyebrow')}
           </div>
           <div className="flex items-center justify-center gap-2 lg:justify-start">
             <h1 className="font-display text-4xl font-semibold leading-[1.1] text-ink-900 sm:text-5xl lg:text-6xl">
-              Turn Your Craft Into a{' '}
-              <span className="text-terracotta-500">Global Story</span>
+              {t('landing.heroTitlePrefix')}{' '}
+              <span className="text-terracotta-500">{t('landing.heroTitleHighlight')}</span>
             </h1>
             <SpeakButton
-              text="Turn Your Craft Into a Global Story. One photo. Your story. AI handles the digital work. No design skills, writing skills, or tech skills needed."
+              text={`${t('landing.heroTitlePrefix')} ${t('landing.heroTitleHighlight')}. ${t('landing.heroSubtitlePrefix')} ${t('landing.heroSubtitleBold')} ${t('landing.helper')}`}
+              lang={SPEECH_LOCALES[uiLang]}
               size={18}
             />
           </div>
           <p className="mx-auto mt-5 max-w-lg text-lg text-ink-700/80 lg:mx-0">
-            One photo. Your story. <span className="font-semibold text-ink-900">AI handles the digital work.</span>
+            {t('landing.heroSubtitlePrefix')} <span className="font-semibold text-ink-900">{t('landing.heroSubtitleBold')}</span>
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
             <PrimaryButton onClick={onStart} className="w-full sm:w-auto">
               <Wand2 size={20} />
-              Start Selling Globally
+              {t('landing.ctaStart')}
             </PrimaryButton>
             <SecondaryButton onClick={onTryDemo} className="w-full sm:w-auto">
-              Try a Sample Product
+              {t('landing.ctaDemo')}
             </SecondaryButton>
           </div>
-          <p className="mt-4 text-sm text-ink-700/50">No design skills, writing skills, or tech skills needed.</p>
+          <p className="mt-4 text-sm text-ink-700/50">{t('landing.helper')}</p>
         </div>
 
         <motion.div
@@ -47,7 +126,7 @@ export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo
             <img src={DEMO_IMAGE_URL} alt="Sample handwoven bamboo basket" className="aspect-square w-full object-cover" />
             <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-white/90 p-3 backdrop-blur-sm">
               <p className="font-display text-sm font-semibold text-ink-900">Handwoven Bamboo Basket</p>
-              <p className="text-xs text-teal-700">✓ Global-ready listing generated</p>
+              <p className="text-xs text-teal-700">{t('landing.demoBadge')}</p>
             </div>
           </div>
         </motion.div>
@@ -57,13 +136,13 @@ export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo
       <section className="border-y border-terracotta-100 bg-white/60 py-14">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <h2 className="text-center font-display text-2xl font-semibold text-ink-900 sm:text-3xl">
-            Three simple steps
+            {t('landing.stepsHeading')}
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
-              { icon: Camera, step: '1', title: 'Upload your craft', desc: 'Take or add one photo of your product.' },
-              { icon: Mic, step: '2', title: 'Tell us your story', desc: 'Speak or type — no professional writing needed.' },
-              { icon: Globe2, step: '3', title: 'Get a global-ready listing', desc: 'Ready to sell — in multiple languages.' },
+              { icon: Camera, step: '1', title: t('landing.step1Title'), desc: t('landing.step1Desc') },
+              { icon: Mic, step: '2', title: t('landing.step2Title'), desc: t('landing.step2Desc') },
+              { icon: Globe2, step: '3', title: t('landing.step3Title'), desc: t('landing.step3Desc') },
             ].map(({ icon: Icon, step, title, desc }) => (
               <div key={step} className="rounded-3xl bg-cream-100 p-6 text-center">
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-terracotta-500 text-white">
@@ -81,17 +160,15 @@ export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo
       {/* What we handle */}
       <section className="mx-auto max-w-5xl px-4 py-14 sm:px-6">
         <h2 className="text-center font-display text-2xl font-semibold text-ink-900 sm:text-3xl">
-          You make the craft. We handle the digital world.
+          {t('landing.handleHeading')}
         </h2>
-        <p className="mx-auto mt-2 max-w-2xl text-center text-ink-700/70">
-          Descriptions, pricing, translations, keywords and marketing — all generated for you, always editable by you.
-        </p>
+        <p className="mx-auto mt-2 max-w-2xl text-center text-ink-700/70">{t('landing.handleSubtitle')}</p>
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {[
-            { icon: Wand2, label: 'Descriptions' },
-            { icon: Tags, label: 'Fair Pricing' },
-            { icon: Globe2, label: 'Translations' },
-            { icon: Sparkles, label: 'Marketing' },
+            { icon: Wand2, label: t('landing.featureDescriptions') },
+            { icon: Tags, label: t('landing.featurePricing') },
+            { icon: Globe2, label: t('landing.featureTranslations') },
+            { icon: Sparkles, label: t('landing.featureMarketing') },
           ].map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-2 rounded-2xl border border-teal-100 bg-teal-50/50 p-5 text-center">
               <Icon className="text-teal-600" size={24} />
@@ -102,7 +179,7 @@ export function Landing({ onStart, onTryDemo }: { onStart: () => void; onTryDemo
         <div className="mt-12 text-center">
           <PrimaryButton onClick={onStart}>
             <Wand2 size={20} />
-            Start Selling Globally
+            {t('landing.ctaStart')}
           </PrimaryButton>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { ImageUp, Sparkles, X } from 'lucide-react';
 import { Card, EyebrowTitle, FieldLabel, PrimaryButton, GhostButton } from '../ui';
+import { useT } from '../../i18n/I18nContext';
 
 interface Props {
   imageDataUrl: string | null;
@@ -15,6 +16,7 @@ const MAX_SIZE_MB = 8;
 const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/jpg'];
 
 export function UploadScreen({ imageDataUrl, productNameHint, onImageChange, onProductNameChange, onAnalyze, onBack }: Props) {
+  const t = useT();
   const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,24 +26,24 @@ export function UploadScreen({ imageDataUrl, productNameHint, onImageChange, onP
       setError(null);
       if (!file) return;
       if (!ACCEPTED.includes(file.type)) {
-        setError('Please upload a JPG, PNG, or WEBP photo.');
+        setError(t('upload.errorType'));
         return;
       }
       if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-        setError(`Please choose a photo smaller than ${MAX_SIZE_MB}MB.`);
+        setError(t('upload.errorSize', { size: MAX_SIZE_MB }));
         return;
       }
       const reader = new FileReader();
       reader.onload = () => onImageChange(reader.result as string, file.name);
-      reader.onerror = () => setError('Could not read that photo — please try another.');
+      reader.onerror = () => setError(t('upload.errorRead'));
       reader.readAsDataURL(file);
     },
-    [onImageChange],
+    [onImageChange, t],
   );
 
   return (
     <div>
-      <EyebrowTitle eyebrow="Step 1 of 8" title="Show us your craft" subtitle="Add one clear photo of your product to begin." icon={<ImageUp size={14} />} />
+      <EyebrowTitle eyebrow={t('nav.stepOf', { n: 1, total: 8 })} title={t('upload.title')} subtitle={t('upload.subtitle')} icon={<ImageUp size={14} />} />
 
       <Card className="mx-auto max-w-2xl">
         {!imageDataUrl ? (
@@ -65,8 +67,8 @@ export function UploadScreen({ imageDataUrl, productNameHint, onImageChange, onP
               <ImageUp size={32} />
             </div>
             <div>
-              <p className="text-lg font-bold text-ink-900">Tap to upload or drag a photo here</p>
-              <p className="mt-1 text-sm text-ink-700/60">JPG, PNG or WEBP — up to {MAX_SIZE_MB}MB</p>
+              <p className="text-lg font-bold text-ink-900">{t('upload.dropHint')}</p>
+              <p className="mt-1 text-sm text-ink-700/60">{t('upload.dropHintSub', { size: MAX_SIZE_MB })}</p>
             </div>
             <input
               ref={inputRef}
@@ -82,7 +84,7 @@ export function UploadScreen({ imageDataUrl, productNameHint, onImageChange, onP
             <button
               onClick={() => onImageChange(null, null)}
               className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink-900 shadow-md transition-transform hover:scale-105"
-              aria-label="Remove photo"
+              aria-label={t('upload.removePhoto')}
             >
               <X size={18} />
             </button>
@@ -92,21 +94,21 @@ export function UploadScreen({ imageDataUrl, productNameHint, onImageChange, onP
         {error && <p className="mt-3 text-sm font-semibold text-terracotta-600">{error}</p>}
 
         <div className="mt-6">
-          <FieldLabel hint="optional">Do you already know the product name?</FieldLabel>
+          <FieldLabel hint={t('upload.nameHint')}>{t('upload.nameLabel')}</FieldLabel>
           <input
             type="text"
             value={productNameHint}
             onChange={(e) => onProductNameChange(e.target.value)}
-            placeholder="e.g. Handwoven Bamboo Basket"
+            placeholder={t('upload.namePlaceholder')}
             className="w-full rounded-xl border-2 border-cream-300 bg-white px-4 py-3 text-base text-ink-900 outline-none transition-colors focus:border-terracotta-400"
           />
         </div>
 
         <div className="mt-8 flex flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-          <GhostButton onClick={onBack}>← Back</GhostButton>
+          <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
           <PrimaryButton onClick={onAnalyze} disabled={!imageDataUrl} className="w-full sm:w-auto">
             <Sparkles size={18} />
-            Analyze My Product
+            {t('upload.analyzeBtn')}
           </PrimaryButton>
         </div>
       </Card>

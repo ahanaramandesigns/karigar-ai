@@ -1,5 +1,7 @@
 import { Loader2, RefreshCw, ScrollText, Sparkles, X } from 'lucide-react';
 import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { SPEECH_LOCALES } from '../../types';
 import type { ProductListing } from '../../types';
 
 interface Props {
@@ -12,13 +14,16 @@ interface Props {
 }
 
 export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onContinue, onBack }: Props) {
+  const t = useT();
+  const lang = SPEECH_LOCALES[useUILanguage()];
+
   if (isLoading || !listing) {
     return (
       <div>
-        <EyebrowTitle eyebrow="Step 4 of 8" title="Writing Your Listing" icon={<ScrollText size={14} />} />
-        <Card className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-3 py-16 text-center">
+        <EyebrowTitle eyebrow={t('nav.stepOf', { n: 4, total: 8 })} title={t('listing.loadingTitle')} icon={<ScrollText size={14} />} />
+        <Card className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-3 py-16 text-center" role="status" aria-live="polite">
           <Loader2 className="animate-spin text-terracotta-500" size={36} />
-          <p className="font-semibold text-ink-800">Turning your story into a global-ready listing...</p>
+          <p className="font-semibold text-ink-800">{t('listing.loadingText')}</p>
         </Card>
       </div>
     );
@@ -29,17 +34,17 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 4 of 8"
-        title="Your Global Product Listing"
-        subtitle="Written for international customers, using your own words for the story. Everything is editable."
+        eyebrow={t('nav.stepOf', { n: 4, total: 8 })}
+        title={t('listing.title')}
+        subtitle={t('listing.subtitle')}
         icon={<ScrollText size={14} />}
       />
 
       <Card className="mx-auto max-w-3xl space-y-6">
         <div>
           <div className="flex items-center gap-1.5">
-            <FieldLabel>Product title</FieldLabel>
-            <SpeakButton text={listing.title} className="-mt-2" />
+            <FieldLabel>{t('listing.titleLabel')}</FieldLabel>
+            <SpeakButton text={listing.title} lang={lang} className="-mt-2" />
           </div>
           <input
             value={listing.title}
@@ -50,8 +55,8 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
 
         <div>
           <div className="flex items-center gap-1.5">
-            <FieldLabel hint="Shown in search results">Short description</FieldLabel>
-            <SpeakButton text={listing.shortDescription} className="-mt-2" />
+            <FieldLabel hint={t('listing.shortDescHint')}>{t('listing.shortDescLabel')}</FieldLabel>
+            <SpeakButton text={listing.shortDescription} lang={lang} className="-mt-2" />
           </div>
           <textarea
             value={listing.shortDescription}
@@ -63,8 +68,8 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
 
         <div>
           <div className="flex items-center gap-1.5">
-            <FieldLabel>Detailed description</FieldLabel>
-            <SpeakButton text={listing.detailedDescription} className="-mt-2" />
+            <FieldLabel>{t('listing.detailedDescLabel')}</FieldLabel>
+            <SpeakButton text={listing.detailedDescription} lang={lang} className="-mt-2" />
           </div>
           <textarea
             value={listing.detailedDescription}
@@ -76,8 +81,8 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
 
         <div>
           <div className="flex items-center gap-1.5">
-            <FieldLabel hint="Your own words, preserved">Your craft story</FieldLabel>
-            <SpeakButton text={listing.artisanStory} className="-mt-2" />
+            <FieldLabel hint={t('listing.storyHint')}>{t('listing.storyLabel')}</FieldLabel>
+            <SpeakButton text={listing.artisanStory} lang={lang} className="-mt-2" />
           </div>
           <textarea
             value={listing.artisanStory}
@@ -89,7 +94,7 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <FieldLabel>Materials</FieldLabel>
+            <FieldLabel>{t('listing.materialsLabel')}</FieldLabel>
             <input
               value={listing.materials}
               onChange={(e) => onChange({ ...listing, materials: e.target.value })}
@@ -97,7 +102,7 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
             />
           </div>
           <div>
-            <FieldLabel>Production time</FieldLabel>
+            <FieldLabel>{t('listing.productionTimeLabel')}</FieldLabel>
             <input
               value={listing.productionTime}
               onChange={(e) => onChange({ ...listing, productionTime: e.target.value })}
@@ -107,7 +112,7 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
         </div>
 
         <div>
-          <FieldLabel>Category</FieldLabel>
+          <FieldLabel>{t('listing.categoryLabel')}</FieldLabel>
           <input
             value={listing.category}
             onChange={(e) => onChange({ ...listing, category: e.target.value })}
@@ -116,7 +121,7 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
         </div>
 
         <div>
-          <FieldLabel hint="Helps customers find you">Search keywords</FieldLabel>
+          <FieldLabel hint={t('listing.keywordsHint')}>{t('listing.keywordsLabel')}</FieldLabel>
           <div className="flex flex-wrap gap-2">
             {listing.keywords.map((k) => (
               <button
@@ -133,15 +138,15 @@ export function ListingScreen({ isLoading, listing, onChange, onRegenerate, onCo
       </Card>
 
       <div className="mx-auto mt-8 flex max-w-3xl flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-        <GhostButton onClick={onBack}>← Back</GhostButton>
+        <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <SecondaryButton onClick={onRegenerate}>
             <RefreshCw size={16} />
-            Regenerate
+            {t('listing.regenerateBtn')}
           </SecondaryButton>
           <PrimaryButton onClick={onContinue}>
             <Sparkles size={18} />
-            Continue to Pricing
+            {t('listing.continueBtn')}
           </PrimaryButton>
         </div>
       </div>

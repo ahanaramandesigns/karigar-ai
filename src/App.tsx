@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
+import { Ear, EarOff, Sparkles } from 'lucide-react';
 import { ProgressStepper } from './components/ProgressStepper';
+import { ReadOnHover } from './components/ReadOnHover';
+import { I18nProvider, useT } from './i18n/I18nContext';
 import { Landing } from './components/screens/Landing';
 import { UploadScreen } from './components/screens/Upload';
 import { StoryInput } from './components/screens/StoryInput';
@@ -26,6 +28,7 @@ import { downloadListing } from './services/exportListing';
 import { loadMarketplaceProducts, makeId, publishListingToMarketplace } from './data/marketplace';
 import { DEMO_ANALYSIS, DEMO_IMAGE_URL, DEMO_PRODUCT_NAME, DEMO_STORY } from './data/demoData';
 import type { AppState, ArtisanStory, Language, Order, ProductAnalysis, ProductListing } from './types';
+import { SPEECH_LOCALES } from './types';
 
 const EMPTY_STORY: ArtisanStory = { materials: '', timeToMake: '', traditionStory: '', origin: '' };
 
@@ -45,10 +48,30 @@ const INITIAL_STATE: AppState = {
   marketing: null,
   isDemoMode: false,
   marketplaceId: null,
+  uiLanguage: 'en',
 };
+
+function readOnHoverStorageGet(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    return window.localStorage.getItem('karigar-ai:read-on-hover') === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function readOnHoverStorageSet(value: boolean) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem('karigar-ai:read-on-hover', String(value));
+  } catch {
+    /* storage may be unavailable — ignore */
+  }
+}
 
 export default function App() {
   const [state, setState] = useState<AppState>(INITIAL_STATE);
+  const [readOnHover, setReadOnHover] = useState(() => readOnHoverStorageGet());
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [listingLoading, setListingLoading] = useState(false);
   const [translateLoading, setTranslateLoading] = useState(false);
@@ -133,13 +156,22 @@ export default function App() {
     }
   };
 
-  const toggleLanguage = (lang: Language) => {
-    const has = state.selectedLanguages.includes(lang);
-    patch({ selectedLanguages: has ? state.selectedLanguages.filter((l) => l !== lang) : [...state.selectedLanguages, lang] });
+  // Keeps <html lang> in sync with the chosen UI language — helps real
+  // screen readers pick the right voice/pronunciation rules, on top of our
+  // own Web Speech read-aloud features.
+  useEffect(() => {
+    document.documentElement.lang = SPEECH_LOCALES[state.uiLanguage].split('-')[0];
+  }, [state.uiLanguage]);
+
+  const toggleReadOnHover = () => {
+    setReadOnHover((v) => {
+      readOnHoverStorageSet(!v);
+      return !v;
+    });
   };
 
   const loadDemo = () => {
-    setState({
+    setState((s) => ({
       ...INITIAL_STATE,
       screen: 3,
       imageDataUrl: DEMO_IMAGE_URL,
@@ -147,11 +179,29 @@ export default function App() {
       productNameHint: DEMO_PRODUCT_NAME,
       story: DEMO_STORY,
       isDemoMode: true,
-    });
+      // Keep whatever language(s) were already chosen on the home page.
+      selectedLanguages: s.selectedLanguages,
+      uiLanguage: s.uiLanguage,
+    }));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const startOver = () => setState(INITIAL_STATE);
+  // Resets the wizard but deliberately keeps the chosen UI language(s) —
+  // language is a site-wide preference, not something tied to one listing.
+  const startOver = () => setState((s) => ({ ...INITIAL_STATE, selectedLanguages: s.selectedLanguages, uiLanguage: s.uiLanguage }));
+
+  // Turning a language ON switches the site to it immediately (that's the
+  // clearer intent — "I picked Marathi" should show Marathi right away,
+  // regardless of where it lands in the array). Turning one OFF keeps the
+  // current UI language if it's still selected, otherwise falls back to
+  // whatever's left.
+  const chooseLanguages = (langs: Language[], justSelected?: Language) => {
+    setState((s) => ({
+      ...s,
+      selectedLanguages: langs,
+      uiLanguage: justSelected ?? (langs.includes(s.uiLanguage) ? s.uiLanguage : (langs[0] ?? 'en')),
+    }));
+  };
 
   // Publish the finished listing to the shared marketplace as soon as the
   // artisan reaches the Dashboard. Reuses the same marketplaceId on repeat
@@ -203,26 +253,31 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-cream-50">
-      <header className="sticky top-0 z-30 border-b border-terracotta-100/60 bg-cream-50/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <button onClick={startOver} className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-terracotta-500 text-white">
-              <Sparkles size={16} />
-            </div>
-            <span className="font-display text-lg font-bold text-ink-900">Karigar AI</span>
-          </button>
-          {state.isDemoMode && (
-            <span className="rounded-full bg-ochre-100 px-3 py-1 text-xs font-bold text-ochre-700">Sample Demo Mode</span>
-          )}
-        </div>
-        {state.screen >= 2 && state.screen <= 9 && <ProgressStepper current={state.screen} />}
-      </header>
+    <I18nProvider language={state.uiLanguage}>
+      <div className="min-h-screen bg-cream-50">
+        <SkipLink />
+        <ReadOnHover enabled={readOnHover} lang={SPEECH_LOCALES[state.uiLanguage]} />
+        <Header
+          isDemoMode={state.isDemoMode}
+          screen={state.screen}
+          onLogoClick={startOver}
+          readOnHover={readOnHover}
+          onToggleReadOnHover={toggleReadOnHover}
+        />
 
-      <main>
+      <main id="main-content">
         <AnimatePresence mode="wait">
           {state.screen === 1 && (
-            <Landing key="landing" onStart={() => goto(2)} onTryDemo={loadDemo} />
+            <Landing
+              key="landing"
+              onStart={() => goto(2)}
+              onTryDemo={loadDemo}
+              selectedLanguages={state.selectedLanguages}
+              uiLanguage={state.uiLanguage}
+              onChooseLanguages={chooseLanguages}
+              readOnHover={readOnHover}
+              onToggleReadOnHover={toggleReadOnHover}
+            />
           )}
 
           {state.screen === 2 && (
@@ -300,7 +355,6 @@ export default function App() {
             <div key="multilingual" className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
               <Multilingual
                 selectedLanguages={state.selectedLanguages}
-                onToggleLanguage={toggleLanguage}
                 translations={state.translations}
                 isLoading={translateLoading}
                 onTranslate={runTranslate}
@@ -368,9 +422,76 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      <footer className="border-t border-terracotta-100 py-6 text-center text-xs text-ink-700/40">
-        Karigar AI — a hackathon concept. "You make the craft. We handle the digital world."
-      </footer>
-    </div>
+        <Footer />
+      </div>
+    </I18nProvider>
+  );
+}
+
+function SkipLink() {
+  const t = useT();
+  return (
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-lg focus:bg-terracotta-600 focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+    >
+      {t('skip.toContent')}
+    </a>
+  );
+}
+
+function Header({
+  isDemoMode,
+  screen,
+  onLogoClick,
+  readOnHover,
+  onToggleReadOnHover,
+}: {
+  isDemoMode: boolean;
+  screen: number;
+  onLogoClick: () => void;
+  readOnHover: boolean;
+  onToggleReadOnHover: () => void;
+}) {
+  const t = useT();
+  return (
+    <header className="sticky top-0 z-30 border-b border-terracotta-100/60 bg-cream-50/90 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <button onClick={onLogoClick} className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-terracotta-500 text-white">
+            <Sparkles size={16} />
+          </div>
+          <span className="font-display text-lg font-bold text-ink-900">Karigar AI</span>
+        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onToggleReadOnHover}
+            aria-pressed={readOnHover}
+            title={t(readOnHover ? 'a11y.readOnHoverOn' : 'a11y.readOnHoverOff')}
+            className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold transition-colors ${
+              readOnHover
+                ? 'border-teal-600 bg-teal-600 text-white'
+                : 'border-teal-200 bg-white text-teal-700 hover:bg-teal-50'
+            }`}
+          >
+            {readOnHover ? <Ear size={14} /> : <EarOff size={14} />}
+            <span className="hidden sm:inline">{t(readOnHover ? 'a11y.readOnHoverOn' : 'a11y.readOnHoverOff')}</span>
+          </button>
+          {isDemoMode && (
+            <span className="rounded-full bg-ochre-100 px-3 py-1 text-xs font-bold text-ochre-700">{t('header.demoMode')}</span>
+          )}
+        </div>
+      </div>
+      {screen >= 2 && screen <= 9 && <ProgressStepper current={screen} />}
+    </header>
+  );
+}
+
+function Footer() {
+  const t = useT();
+  return (
+    <footer className="border-t border-terracotta-100 py-6 text-center text-xs text-ink-700/40">
+      {t('footer.tagline')}
+    </footer>
   );
 }

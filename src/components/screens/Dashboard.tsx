@@ -1,6 +1,7 @@
 import { CheckCircle2, Download, Globe2, RotateCcw, ShoppingBag, Store } from 'lucide-react';
 import { Card, EyebrowTitle, PrimaryButton, SecondaryButton, SpeakButton } from '../ui';
-import { LANGUAGE_LABELS } from '../../types';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { LANGUAGE_LABELS, SPEECH_LOCALES } from '../../types';
 import type { AppState } from '../../types';
 
 interface Props {
@@ -11,15 +12,17 @@ interface Props {
 }
 
 export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: Props) {
+  const t = useT();
+  const lang = SPEECH_LOCALES[useUILanguage()];
   const { imageDataUrl, listing, pricing, finalPrice, translations, marketing, selectedLanguages } = state;
   const price = finalPrice ?? pricing?.recommended;
 
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 8 of 8 — Complete"
-        title="Your Listing Is Ready"
-        subtitle="Everything in one place. Download it, or explore where you could publish next."
+        eyebrow={t('nav.stepComplete', { n: 8, total: 8 })}
+        title={t('dashboard.title')}
+        subtitle={t('dashboard.subtitle')}
         icon={<CheckCircle2 size={14} />}
       />
 
@@ -32,8 +35,8 @@ export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: P
           )}
           <Card>
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold uppercase tracking-wide text-ink-700/50">Starting price</p>
-              {price != null && <SpeakButton text={`Starting price: ${price} rupees`} />}
+              <p className="text-xs font-bold uppercase tracking-wide text-ink-700/50">{t('dashboard.startingPriceLabel')}</p>
+              {price != null && <SpeakButton text={`${t('dashboard.startingPriceLabel')}: ${price}`} lang={lang} />}
             </div>
             <p className="font-display text-3xl font-semibold text-terracotta-600">
               {price ? `₹${price.toLocaleString('en-IN')}` : '—'}
@@ -48,15 +51,15 @@ export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: P
           </Card>
           <PrimaryButton onClick={onExport} className="w-full">
             <Download size={18} />
-            Download Listing
+            {t('dashboard.downloadBtn')}
           </PrimaryButton>
           <SecondaryButton onClick={onStartOver} className="w-full">
             <RotateCcw size={16} />
-            Start a New Product
+            {t('dashboard.startNewBtn')}
           </SecondaryButton>
           <SecondaryButton onClick={onGoToMarketplace} className="w-full">
             <Store size={16} />
-            Take Me to Marketplace
+            {t('dashboard.marketplaceBtn')}
           </SecondaryButton>
         </div>
 
@@ -68,6 +71,7 @@ export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: P
                 text={[listing?.title, listing?.shortDescription, listing?.detailedDescription, listing?.artisanStory]
                   .filter(Boolean)
                   .join('. ')}
+                lang={lang}
               />
             </div>
             <p className="mt-2 text-sm text-ink-700/80">{listing?.shortDescription}</p>
@@ -86,14 +90,14 @@ export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: P
 
           {marketing && (
             <Card>
-              <h4 className="mb-2 font-display text-base font-semibold text-ink-900">Marketing tagline</h4>
+              <h4 className="mb-2 font-display text-base font-semibold text-ink-900">{t('dashboard.marketingTaglineLabel')}</h4>
               <p className="text-sm font-semibold text-terracotta-600">{marketing.tagline}</p>
             </Card>
           )}
 
           <div>
             <div className="mb-3 flex items-center gap-2 text-sm font-bold text-ink-800">
-              <Globe2 size={16} /> Ready for marketplace export
+              <Globe2 size={16} /> {t('dashboard.exportHeading')}
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
@@ -105,20 +109,16 @@ export function Dashboard({ state, onExport, onStartOver, onGoToMarketplace }: P
                   <Icon className="text-ink-700/50" size={22} />
                   <span className="text-sm font-bold text-ink-800">{name}</span>
                   <span className="rounded-full bg-cream-300 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink-700/60">
-                    Future integration
+                    {t('dashboard.futureIntegration')}
                   </span>
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-center text-xs text-ink-700/40">
-              Not yet connected to these marketplaces — your listing is formatted and ready when you are.
-            </p>
+            <p className="mt-2 text-center text-xs text-ink-700/40">{t('dashboard.exportNote')}</p>
           </div>
 
           {Object.keys(translations).length > 0 && (
-            <p className="text-center text-sm font-semibold text-ink-900">
-              🎉 You make the craft. We handle the digital world.
-            </p>
+            <p className="text-center text-sm font-semibold text-ink-900">{t('dashboard.celebration')}</p>
           )}
         </div>
       </div>

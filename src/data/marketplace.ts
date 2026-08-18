@@ -1,4 +1,4 @@
-import type { AppState, MarketplaceProduct } from '../types';
+import type { AppState, Language, MarketplaceProduct } from '../types';
 
 // The "marketplace" is a shared shelf of every finished listing, so
 // consumers can browse and buy what karigars have made with the AI tool.
@@ -59,9 +59,35 @@ export function publishListingToMarketplace(id: string, state: AppState): Market
     keywords: state.listing.keywords,
     price: state.finalPrice ?? state.pricing?.recommended ?? 0,
     createdAt: priorCreatedAt ?? Date.now(),
+    translations: state.translations,
   };
   const next = existing.filter((p) => p.id !== id);
   next.push(product);
   writeAll(next);
   return product;
+}
+
+// Resolves what to actually show a shopper for a given product, in their
+// chosen site language — the translated version if the artisan produced
+// one for that language, otherwise the artisan's original-language text
+// (never a fabricated translation). `wasTranslated` tells the UI whether to
+// show the "not yet translated into this language" note.
+export function resolveProductContent(product: MarketplaceProduct, lang: Language) {
+  const translated = product.translations?.[lang];
+  if (translated) {
+    return {
+      title: translated.title,
+      shortDescription: translated.shortDescription,
+      detailedDescription: translated.detailedDescription,
+      artisanStory: translated.artisanStory,
+      wasTranslated: true,
+    };
+  }
+  return {
+    title: product.title,
+    shortDescription: product.shortDescription,
+    detailedDescription: product.detailedDescription,
+    artisanStory: product.artisanStory,
+    wasTranslated: false,
+  };
 }

@@ -1,5 +1,7 @@
 import { ScanEye, Sparkles, Loader2 } from 'lucide-react';
 import { Card, ConfidenceBadge, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SpeakButton } from '../ui';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { SPEECH_LOCALES } from '../../types';
 import type { ProductAnalysis } from '../../types';
 
 interface Props {
@@ -29,12 +31,15 @@ function EditableList({
 }
 
 export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContinue, onBack }: Props) {
+  const t = useT();
+  const lang = SPEECH_LOCALES[useUILanguage()];
+
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 3 of 8"
-        title="AI Product Analysis"
-        subtitle="Here's what we noticed in your photo. Everything below is editable — please correct anything we got wrong."
+        eyebrow={t('nav.stepOf', { n: 3, total: 8 })}
+        title={t('analysis.title')}
+        subtitle={t('analysis.subtitle')}
         icon={<ScanEye size={14} />}
       />
 
@@ -47,18 +52,18 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
 
         <Card>
           {isLoading || !analysis ? (
-            <div className="flex flex-col items-center justify-center gap-3 py-14 text-center">
+            <div className="flex flex-col items-center justify-center gap-3 py-14 text-center" role="status" aria-live="polite">
               <Loader2 className="animate-spin text-terracotta-500" size={36} />
-              <p className="font-semibold text-ink-800">Looking closely at your photo...</p>
-              <p className="text-sm text-ink-700/60">This usually takes a few seconds.</p>
+              <p className="font-semibold text-ink-800">{t('analysis.loadingTitle')}</p>
+              <p className="text-sm text-ink-700/60">{t('analysis.loadingSub')}</p>
             </div>
           ) : (
             <div className="space-y-5">
               <div>
                 <div className="mb-1 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <FieldLabel>Category</FieldLabel>
-                    <SpeakButton text={`Category: ${analysis.category}`} className="-mt-2" />
+                    <FieldLabel>{t('analysis.categoryLabel')}</FieldLabel>
+                    <SpeakButton text={`${t('analysis.categoryLabel')}: ${analysis.category}`} lang={lang} className="-mt-2" />
                   </div>
                   <ConfidenceBadge level="estimated" />
                 </div>
@@ -71,7 +76,7 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
 
               <div>
                 <div className="mb-1 flex items-center justify-between">
-                  <FieldLabel>Craft type</FieldLabel>
+                  <FieldLabel>{t('analysis.craftTypeLabel')}</FieldLabel>
                   <ConfidenceBadge level="likely" />
                 </div>
                 <input
@@ -83,7 +88,7 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
 
               <div>
                 <div className="mb-1 flex items-center justify-between">
-                  <FieldLabel>Visible materials</FieldLabel>
+                  <FieldLabel>{t('analysis.materialsLabel')}</FieldLabel>
                   <ConfidenceBadge level="uncertain" />
                 </div>
                 <EditableList values={analysis.visibleMaterials} onChange={(v) => onChange({ ...analysis, visibleMaterials: v })} />
@@ -91,14 +96,14 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
 
               <div>
                 <div className="mb-1 flex items-center justify-between">
-                  <FieldLabel>Colors</FieldLabel>
+                  <FieldLabel>{t('analysis.colorsLabel')}</FieldLabel>
                   <ConfidenceBadge level="likely" />
                 </div>
                 <EditableList values={analysis.colors} onChange={(v) => onChange({ ...analysis, colors: v })} />
               </div>
 
               <div>
-                <FieldLabel>Style</FieldLabel>
+                <FieldLabel>{t('analysis.styleLabel')}</FieldLabel>
                 <input
                   value={analysis.style}
                   onChange={(e) => onChange({ ...analysis, style: e.target.value })}
@@ -108,9 +113,9 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
 
               <div className="flex items-start justify-between gap-2 rounded-xl bg-ochre-50 px-4 py-3">
                 <p className="text-xs text-ochre-800">
-                  <strong>Note:</strong> {analysis.notes}
+                  <strong>{t('analysis.noteLabel')}</strong> {analysis.notes}
                 </p>
-                <SpeakButton text={analysis.notes} />
+                <SpeakButton text={analysis.notes} lang={lang} />
               </div>
             </div>
           )}
@@ -118,10 +123,10 @@ export function Analysis({ imageDataUrl, isLoading, analysis, onChange, onContin
       </div>
 
       <div className="mx-auto mt-8 flex max-w-4xl flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-        <GhostButton onClick={onBack}>← Back</GhostButton>
+        <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
         <PrimaryButton onClick={onContinue} disabled={isLoading || !analysis} className="w-full sm:w-auto">
           <Sparkles size={18} />
-          Looks Good — Continue
+          {t('analysis.continueBtn')}
         </PrimaryButton>
       </div>
     </div>

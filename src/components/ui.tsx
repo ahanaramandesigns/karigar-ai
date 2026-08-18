@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Copy, Volume2, VolumeX } from 'lucide-react';
 import { useState } from 'react';
@@ -53,9 +53,13 @@ export function GhostButton({
   );
 }
 
-export function Card({ children, className = '' }: PropsWithChildren<{ className?: string }>) {
+export function Card({
+  children,
+  className = '',
+  ...rest
+}: PropsWithChildren<{ className?: string } & HTMLAttributes<HTMLDivElement>>) {
   return (
-    <div className={`rounded-3xl border border-terracotta-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8 ${className}`}>
+    <div className={`rounded-3xl border border-terracotta-100 bg-white/80 p-6 shadow-sm backdrop-blur-sm sm:p-8 ${className}`} {...rest}>
       {children}
     </div>
   );

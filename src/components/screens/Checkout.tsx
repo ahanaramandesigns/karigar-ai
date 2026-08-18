@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { CreditCard, MapPin, ShieldCheck, ShoppingBag, Smartphone, Truck } from 'lucide-react';
 import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton } from '../ui';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { resolveProductContent } from '../../data/marketplace';
 import type { MarketplaceProduct } from '../../types';
 
 interface Props {
@@ -17,6 +19,10 @@ const inputCls =
   'w-full rounded-xl border-2 border-cream-300 bg-white px-4 py-2.5 text-sm text-ink-900 outline-none transition-colors focus:border-terracotta-400';
 
 export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
+  const t = useT();
+  const uiLang = useUILanguage();
+  const content = resolveProductContent(product, uiLang);
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -41,7 +47,7 @@ export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
 
   const handlePlaceOrder = () => {
     if (!isComplete) {
-      setError('Please fill in every field before placing the order.');
+      setError(t('checkout.validationError'));
       return;
     }
     setError(null);
@@ -50,43 +56,43 @@ export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
 
   return (
     <div>
-      <EyebrowTitle eyebrow="Checkout" title="Delivery & Payment" icon={<ShoppingBag size={14} />} />
+      <EyebrowTitle eyebrow={t('checkout.eyebrow')} title={t('checkout.title')} icon={<ShoppingBag size={14} />} />
 
       <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-[1fr_320px]">
         <div className="space-y-6">
           <Card>
             <h3 className="mb-4 flex items-center gap-2 font-display text-lg font-semibold text-ink-900">
-              <MapPin size={18} className="text-terracotta-500" /> Shipping address
+              <MapPin size={18} className="text-terracotta-500" /> {t('checkout.shippingHeading')}
             </h3>
             <div className="space-y-4">
               <div>
-                <FieldLabel>Full name</FieldLabel>
-                <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Priya Sharma" className={inputCls} />
+                <FieldLabel>{t('checkout.nameLabel')}</FieldLabel>
+                <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t('checkout.namePlaceholder')} className={inputCls} />
               </div>
               <div>
-                <FieldLabel>Phone number</FieldLabel>
-                <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="e.g. 98765 43210" className={inputCls} />
+                <FieldLabel>{t('checkout.phoneLabel')}</FieldLabel>
+                <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t('checkout.phonePlaceholder')} className={inputCls} />
               </div>
               <div>
-                <FieldLabel>Address</FieldLabel>
-                <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="House no., street, area" className={inputCls} />
+                <FieldLabel>{t('checkout.addressLabel')}</FieldLabel>
+                <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t('checkout.addressPlaceholder')} className={inputCls} />
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" className={inputCls} />
-                <input value={region} onChange={(e) => setRegion(e.target.value)} placeholder="State" className={inputCls} />
-                <input value={pincode} onChange={(e) => setPincode(e.target.value)} placeholder="PIN code" className={inputCls} />
+                <input value={city} onChange={(e) => setCity(e.target.value)} placeholder={t('checkout.cityPlaceholder')} className={inputCls} />
+                <input value={region} onChange={(e) => setRegion(e.target.value)} placeholder={t('checkout.statePlaceholder')} className={inputCls} />
+                <input value={pincode} onChange={(e) => setPincode(e.target.value)} placeholder={t('checkout.pinPlaceholder')} className={inputCls} />
               </div>
             </div>
           </Card>
 
           <Card>
-            <h3 className="mb-4 font-display text-lg font-semibold text-ink-900">Payment method</h3>
+            <h3 className="mb-4 font-display text-lg font-semibold text-ink-900">{t('checkout.paymentHeading')}</h3>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {(
                 [
-                  { key: 'card', label: 'Card', icon: CreditCard },
-                  { key: 'upi', label: 'UPI', icon: Smartphone },
-                  { key: 'cod', label: 'Cash on Delivery', icon: Truck },
+                  { key: 'card', label: t('checkout.cardLabel'), icon: CreditCard },
+                  { key: 'upi', label: t('checkout.upiLabel'), icon: Smartphone },
+                  { key: 'cod', label: t('checkout.codLabel'), icon: Truck },
                 ] as const
               ).map(({ key, label, icon: Icon }) => (
                 <button
@@ -105,7 +111,7 @@ export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
             {method === 'card' && (
               <div className="mt-5 space-y-4">
                 <div>
-                  <FieldLabel>Card number</FieldLabel>
+                  <FieldLabel>{t('checkout.cardNumberLabel')}</FieldLabel>
                   <input
                     value={cardNumber}
                     onChange={(e) => setCardNumber(e.target.value.replace(/[^\d ]/g, ''))}
@@ -134,12 +140,12 @@ export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
             )}
             {method === 'upi' && (
               <div className="mt-5">
-                <FieldLabel>UPI ID</FieldLabel>
-                <input value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder="yourname@upi" className={inputCls} />
+                <FieldLabel>{t('checkout.upiIdLabel')}</FieldLabel>
+                <input value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder={t('checkout.upiIdPlaceholder')} className={inputCls} />
               </div>
             )}
             {method === 'cod' && (
-              <p className="mt-5 text-sm text-ink-700/70">Pay in cash when your order arrives.</p>
+              <p className="mt-5 text-sm text-ink-700/70">{t('checkout.codNote')}</p>
             )}
 
             {error && <p className="mt-4 text-sm font-semibold text-terracotta-600">{error}</p>}
@@ -148,38 +154,38 @@ export function Checkout({ product, quantity, onPlaceOrder, onBack }: Props) {
 
         <div className="space-y-4">
           <Card>
-            <h3 className="mb-4 font-display text-base font-semibold text-ink-900">Order summary</h3>
+            <h3 className="mb-4 font-display text-base font-semibold text-ink-900">{t('checkout.orderSummaryHeading')}</h3>
             <div className="flex gap-3">
-              <img src={product.imageDataUrl} alt={product.title} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
+              <img src={product.imageDataUrl} alt={content.title} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-ink-900">{product.title}</p>
-                <p className="text-xs text-ink-700/60">Qty {quantity}</p>
+                <p className="truncate text-sm font-semibold text-ink-900">{content.title}</p>
+                <p className="text-xs text-ink-700/60">{t('checkout.qtyLabel', { n: quantity })}</p>
               </div>
             </div>
             <div className="mt-5 space-y-2 border-t border-cream-200 pt-4 text-sm">
               <div className="flex justify-between text-ink-700/70">
-                <span>Subtotal</span>
+                <span>{t('checkout.subtotalLabel')}</span>
                 <span>₹{subtotal.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-ink-700/70">
-                <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                <span>{t('checkout.shippingLabel')}</span>
+                <span>{shipping === 0 ? t('checkout.freeLabel') : `₹${shipping}`}</span>
               </div>
               <div className="flex justify-between border-t border-cream-200 pt-2 font-display text-base font-semibold text-ink-900">
-                <span>Total</span>
+                <span>{t('checkout.totalLabel')}</span>
                 <span>₹{total.toLocaleString('en-IN')}</span>
               </div>
             </div>
             <PrimaryButton onClick={handlePlaceOrder} className="mt-5 w-full">
-              Place Order
+              {t('checkout.placeOrderBtn')}
             </PrimaryButton>
             <p className="mt-3 flex items-start gap-1.5 text-[11px] text-ink-700/40">
               <ShieldCheck size={13} className="mt-0.5 shrink-0" />
-              Demo checkout — no real payment is processed and nothing ships.
+              {t('checkout.demoNote')}
             </p>
           </Card>
           <div className="text-center">
-            <GhostButton onClick={onBack}>← Back to product</GhostButton>
+            <GhostButton onClick={onBack}>{t('checkout.backBtn')}</GhostButton>
           </div>
         </div>
       </div>

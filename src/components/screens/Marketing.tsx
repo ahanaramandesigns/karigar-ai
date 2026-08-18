@@ -1,5 +1,7 @@
 import { Camera, Loader2, MessageCircle, Search, Sparkles, Tag, Target } from 'lucide-react';
 import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton, SpeakButton } from '../ui';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { SPEECH_LOCALES } from '../../types';
 import type { MarketingAssets } from '../../types';
 
 interface Props {
@@ -11,13 +13,16 @@ interface Props {
 }
 
 export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }: Props) {
+  const t = useT();
+  const lang = SPEECH_LOCALES[useUILanguage()];
+
   if (isLoading || !marketing) {
     return (
       <div>
-        <EyebrowTitle eyebrow="Step 7 of 8" title="Creating Your Marketing Kit" icon={<Sparkles size={14} />} />
-        <Card className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-3 py-16 text-center">
+        <EyebrowTitle eyebrow={t('nav.stepOf', { n: 7, total: 8 })} title={t('marketing.loadingTitle')} icon={<Sparkles size={14} />} />
+        <Card className="mx-auto flex max-w-2xl flex-col items-center justify-center gap-3 py-16 text-center" role="status" aria-live="polite">
           <Loader2 className="animate-spin text-terracotta-500" size={36} />
-          <p className="font-semibold text-ink-800">Putting together captions, messages and keywords...</p>
+          <p className="font-semibold text-ink-800">{t('marketing.loadingText')}</p>
         </Card>
       </div>
     );
@@ -26,9 +31,9 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 7 of 8"
-        title="AI Marketing Assistant"
-        subtitle="Ready-to-use posts and messages — no marketing knowledge required. Everything is editable."
+        eyebrow={t('nav.stepOf', { n: 7, total: 8 })}
+        title={t('marketing.title')}
+        subtitle={t('marketing.subtitle')}
         icon={<Sparkles size={14} />}
       />
 
@@ -36,10 +41,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
         <Card>
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
-              <Camera size={16} className="text-terracotta-500" /> Instagram Caption
+              <Camera size={16} className="text-terracotta-500" /> {t('marketing.instagramLabel')}
             </div>
             <div className="flex items-center gap-1">
-              <SpeakButton text={marketing.instagramCaption} />
+              <SpeakButton text={marketing.instagramCaption} lang={lang} />
               <CopyButton text={marketing.instagramCaption} />
             </div>
           </div>
@@ -54,10 +59,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
         <Card>
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
-              <MessageCircle size={16} className="text-teal-600" /> WhatsApp Message
+              <MessageCircle size={16} className="text-teal-600" /> {t('marketing.whatsappLabel')}
             </div>
             <div className="flex items-center gap-1">
-              <SpeakButton text={marketing.whatsappMessage} />
+              <SpeakButton text={marketing.whatsappMessage} lang={lang} />
               <CopyButton text={marketing.whatsappMessage} />
             </div>
           </div>
@@ -71,7 +76,7 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
 
         <Card>
           <div className="mb-3 flex items-center gap-2 text-sm font-bold text-ink-900">
-            <Search size={16} className="text-ochre-600" /> Search Keywords
+            <Search size={16} className="text-ochre-600" /> {t('marketing.keywordsLabel')}
           </div>
           <div className="flex flex-wrap gap-2">
             {marketing.seoKeywords.map((k) => (
@@ -85,9 +90,9 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
         <Card>
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
-              <Target size={16} className="text-terracotta-500" /> Who's it for
+              <Target size={16} className="text-terracotta-500" /> {t('marketing.targetLabel')}
             </div>
-            <SpeakButton text={marketing.targetSegment} />
+            <SpeakButton text={marketing.targetSegment} lang={lang} />
           </div>
           <p className="text-sm text-ink-700/80">{marketing.targetSegment}</p>
         </Card>
@@ -95,10 +100,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
         <Card className="sm:col-span-2">
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm font-bold text-ink-900">
-              <Tag size={16} className="text-terracotta-500" /> Tagline
+              <Tag size={16} className="text-terracotta-500" /> {t('marketing.taglineLabel')}
             </div>
             <div className="flex items-center gap-1">
-              <SpeakButton text={marketing.tagline} />
+              <SpeakButton text={marketing.tagline} lang={lang} />
               <CopyButton text={marketing.tagline} />
             </div>
           </div>
@@ -111,10 +116,10 @@ export function Marketing({ isLoading, marketing, onChange, onContinue, onBack }
       </div>
 
       <div className="mx-auto mt-8 flex max-w-4xl flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-        <GhostButton onClick={onBack}>← Back</GhostButton>
+        <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
         <PrimaryButton onClick={onContinue} className="w-full sm:w-auto">
           <Sparkles size={18} />
-          Finish & View Dashboard
+          {t('marketing.continueBtn')}
         </PrimaryButton>
       </div>
     </div>

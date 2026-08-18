@@ -98,3 +98,29 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-terracotta-200); border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-terracotta-300); }
+
+/* Accessibility: a clear, visible focus ring for keyboard navigation
+   everywhere on the site (needed for the skip link, and for anyone
+   tabbing through with Read on Hover, or without a mouse at all). */
+:focus-visible {
+  outline: 3px solid var(--color-teal-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Respect the OS-level "reduce motion" preference. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float-soft,
+  .animate-pulse-ring {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

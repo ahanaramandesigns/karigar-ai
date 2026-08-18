@@ -1,5 +1,7 @@
 import { IndianRupee, Sparkles } from 'lucide-react';
 import { Card, EyebrowTitle, FieldLabel, GhostButton, PrimaryButton, SpeakButton } from '../ui';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { SPEECH_LOCALES } from '../../types';
 import type { PricingInputs, PricingResult } from '../../types';
 
 interface Props {
@@ -44,39 +46,42 @@ function NumberField({
 }
 
 export function Pricing({ inputs, onInputsChange, pricing, finalPrice, onFinalPriceChange, onContinue, onBack }: Props) {
+  const t = useT();
+  const lang = SPEECH_LOCALES[useUILanguage()];
+
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 5 of 8"
-        title="Smart Pricing Assistant"
-        subtitle="A fair starting point based on your costs and time — you always have the final say."
+        eyebrow={t('nav.stepOf', { n: 5, total: 8 })}
+        title={t('pricing.title')}
+        subtitle={t('pricing.subtitle')}
         icon={<IndianRupee size={14} />}
       />
 
       <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
         <Card>
-          <h3 className="mb-4 font-display text-lg font-semibold text-ink-900">A few quick numbers</h3>
+          <h3 className="mb-4 font-display text-lg font-semibold text-ink-900">{t('pricing.numbersHeading')}</h3>
           <div className="space-y-4">
             <NumberField
-              label="Material cost"
+              label={t('pricing.materialCostLabel')}
               prefix="₹"
               value={inputs.materialCost}
               onChange={(n) => onInputsChange({ ...inputs, materialCost: n })}
             />
             <NumberField
-              label="Hours to make one piece"
+              label={t('pricing.hoursLabel')}
               suffix="hrs"
               value={inputs.hoursToMake}
               onChange={(n) => onInputsChange({ ...inputs, hoursToMake: n })}
             />
             <NumberField
-              label="Your time, per hour"
+              label={t('pricing.hourlyRateLabel')}
               prefix="₹"
               value={inputs.hourlyRate}
               onChange={(n) => onInputsChange({ ...inputs, hourlyRate: n })}
             />
             <NumberField
-              label="Desired margin"
+              label={t('pricing.marginLabel')}
               suffix="%"
               value={inputs.desiredMarginPercent}
               onChange={(n) => onInputsChange({ ...inputs, desiredMarginPercent: n })}
@@ -86,27 +91,28 @@ export function Pricing({ inputs, onInputsChange, pricing, finalPrice, onFinalPr
 
         <div className="rounded-3xl border border-teal-900 bg-teal-800 p-6 text-cream-50 shadow-sm sm:p-8">
           <div className="mb-1 flex items-center gap-1.5">
-            <h3 className="font-display text-lg font-semibold">Suggested price</h3>
+            <h3 className="font-display text-lg font-semibold">{t('pricing.suggestedPriceHeading')}</h3>
             {pricing && (
               <SpeakButton
-                text={`Suggested price range: ${pricing.low} to ${pricing.high} rupees. ${pricing.explanation.join('. ')}`}
+                text={`${t('pricing.suggestedRangeLabel')}: ${pricing.low} - ${pricing.high}. ${pricing.explanation.join('. ')}`}
+                lang={lang}
                 className="text-cream-100 hover:bg-white/10"
               />
             )}
           </div>
-          <p className="mb-5 text-xs text-teal-100/80">This is an AI-assisted estimate — you have final control.</p>
+          <p className="mb-5 text-xs text-teal-100/80">{t('pricing.suggestedPriceSub')}</p>
 
           {pricing && (
             <>
               <div className="mb-5 rounded-2xl bg-white/10 p-5 text-center">
-                <p className="text-xs font-semibold uppercase tracking-wide text-teal-100/70">Suggested range</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-teal-100/70">{t('pricing.suggestedRangeLabel')}</p>
                 <p className="mt-1 font-display text-2xl font-semibold">
                   ₹{pricing.low.toLocaleString('en-IN')} – ₹{pricing.high.toLocaleString('en-IN')}
                 </p>
               </div>
 
               <FieldLabel>
-                <span className="text-cream-50">Your starting price</span>
+                <span className="text-cream-50">{t('pricing.startingPriceLabel')}</span>
               </FieldLabel>
               <div className="mb-5 flex items-center overflow-hidden rounded-xl border-2 border-white/30 bg-white/10">
                 <span className="pl-4 font-semibold text-cream-100">₹</span>
@@ -133,10 +139,10 @@ export function Pricing({ inputs, onInputsChange, pricing, finalPrice, onFinalPr
       </div>
 
       <div className="mx-auto mt-8 flex max-w-4xl flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-        <GhostButton onClick={onBack}>← Back</GhostButton>
+        <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
         <PrimaryButton onClick={onContinue} className="w-full sm:w-auto">
           <Sparkles size={18} />
-          Continue to Languages
+          {t('pricing.continueBtn')}
         </PrimaryButton>
       </div>
     </div>

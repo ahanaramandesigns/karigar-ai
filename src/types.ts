@@ -1,6 +1,6 @@
 // Core domain types for Karigar AI
 
-export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'es' | 'zh';
+export type Language = 'en' | 'hi' | 'kn' | 'ta' | 'ml' | 'mr' | 'pa' | 'es' | 'zh';
 
 export const LANGUAGE_LABELS: Record<Language, { name: string; native: string; flag: string }> = {
   en: { name: 'English', native: 'English', flag: '🇬🇧' },
@@ -9,6 +9,7 @@ export const LANGUAGE_LABELS: Record<Language, { name: string; native: string; f
   ta: { name: 'Tamil', native: 'தமிழ்', flag: '🇮🇳' },
   ml: { name: 'Malayalam', native: 'മലയാളം', flag: '🇮🇳' },
   mr: { name: 'Marathi', native: 'मराठी', flag: '🇮🇳' },
+  pa: { name: 'Punjabi', native: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
   es: { name: 'Spanish', native: 'Español', flag: '🇪🇸' },
   zh: { name: 'Mandarin', native: '中文', flag: '🇨🇳' },
 };
@@ -22,6 +23,7 @@ export const SPEECH_LOCALES: Record<Language, string> = {
   ta: 'ta-IN',
   ml: 'ml-IN',
   mr: 'mr-IN',
+  pa: 'pa-IN',
   es: 'es-ES',
   zh: 'zh-CN',
 };
@@ -107,6 +109,7 @@ export interface AppState {
   marketing: MarketingAssets | null;
   isDemoMode: boolean;
   marketplaceId: string | null;
+  uiLanguage: Language;
 }
 
 // A finished listing, published to the shared marketplace so consumers can
@@ -123,6 +126,11 @@ export interface MarketplaceProduct {
   keywords: string[];
   price: number;
   createdAt: number;
+  // Every language the artisan translated this listing into, so shoppers
+  // browsing the marketplace in that language see it in their own words.
+  // Falls back to the base (English-authored) fields above when a shopper's
+  // chosen language isn't among these.
+  translations: Partial<Record<Language, TranslatedListing>>;
 }
 
 export interface Order {

@@ -317,6 +317,13 @@ const L10N: Record<Language, Localized> = {
     originalStoryLabel: 'कारागिराची कहाणी (मूळ भाषेत)',
     categoryLabel: 'प्रकार',
   },
+  pa: {
+    by: 'ਇੱਕ ਰਵਾਇਤੀ ਕਾਰੀਗਰ ਦੁਆਰਾ ਹੱਥੀਂ ਬਣਾਇਆ ਗਿਆ',
+    handmadeWith: 'ਹੱਥੀਂ ਬਣਾਇਆ ਗਿਆ, ਵਰਤੀ ਗਈ ਸਮੱਗਰੀ:',
+    approxTime: 'ਬਣਾਉਣ ਵਿੱਚ ਲੱਗਣ ਵਾਲਾ ਅੰਦਾਜ਼ਨ ਸਮਾਂ',
+    originalStoryLabel: 'ਕਾਰੀਗਰ ਦੀ ਕਹਾਣੀ (ਮੂਲ ਭਾਸ਼ਾ ਵਿੱਚ)',
+    categoryLabel: 'ਸ਼੍ਰੇਣੀ',
+  },
   es: {
     by: 'Hecho a mano por un artesano tradicional',
     handmadeWith: 'Hecho a mano con',

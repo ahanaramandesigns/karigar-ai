@@ -1,6 +1,8 @@
 import { Mic, MicOff, Sparkles, BookHeart } from 'lucide-react';
 import { Card, EyebrowTitle, FieldLabel, PrimaryButton, GhostButton, SpeakButton } from '../ui';
 import { useVoiceInput } from '../../hooks/useVoiceInput';
+import { useT, useUILanguage } from '../../i18n/I18nContext';
+import { SPEECH_LOCALES } from '../../types';
 import type { ArtisanStory } from '../../types';
 
 interface Props {
@@ -16,12 +18,18 @@ function QuestionBlock({
   placeholder,
   value,
   onUpdate,
+  micLabel,
+  listeningNote,
+  lang,
 }: {
   label: string;
   field: keyof ArtisanStory;
   placeholder: string;
   value: string;
   onUpdate: (field: keyof ArtisanStory, val: string) => void;
+  micLabel: string;
+  listeningNote: string;
+  lang: string;
 }) {
   const { isSupported, isListening, error, start, stop } = useVoiceInput((text) =>
     onUpdate(field, value ? `${value} ${text}` : text),
@@ -31,7 +39,7 @@ function QuestionBlock({
     <div className="mb-6 last:mb-0">
       <div className="flex items-center gap-1.5">
         <FieldLabel>{label}</FieldLabel>
-        <SpeakButton text={label} className="-mt-2" />
+        <SpeakButton text={label} lang={lang} className="-mt-2" />
       </div>
       <div className="relative">
         <textarea
@@ -45,8 +53,8 @@ function QuestionBlock({
           <button
             type="button"
             onClick={isListening ? stop : start}
-            title="Tell your story"
-            aria-label="Tell your story with your voice"
+            title={micLabel}
+            aria-label={micLabel}
             className={`absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full text-white shadow-md transition-colors ${
               isListening ? 'animate-pulse-ring bg-terracotta-600' : 'bg-teal-600 hover:bg-teal-700'
             }`}
@@ -55,69 +63,82 @@ function QuestionBlock({
           </button>
         )}
       </div>
-      {isListening && <p className="mt-1.5 text-xs font-semibold text-teal-700">🎙️ Listening — speak naturally...</p>}
+      {isListening && <p className="mt-1.5 text-xs font-semibold text-teal-700">{listeningNote}</p>}
       {error && <p className="mt-1.5 text-xs font-semibold text-terracotta-600">{error}</p>}
     </div>
   );
 }
 
 export function StoryInput({ story, onChange, onGenerate, onBack }: Props) {
+  const t = useT();
   const update = (field: keyof ArtisanStory, val: string) => onChange({ ...story, [field]: val });
   const canContinue = story.materials.trim() && story.timeToMake.trim();
+  const uiLang = useUILanguage();
+  const speechLang = SPEECH_LOCALES[uiLang]; // the question labels are in the UI language, so read them back in it too
 
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 2 of 8"
-        title="Tell us about your craft"
-        subtitle="No professional writing needed — just answer naturally, by typing or speaking."
+        eyebrow={t('nav.stepOf', { n: 2, total: 8 })}
+        title={t('story.title')}
+        subtitle={t('story.subtitle')}
         icon={<BookHeart size={14} />}
       />
 
       <Card className="mx-auto max-w-2xl">
         <div className="mb-6 flex items-center gap-2 rounded-xl bg-teal-50 px-4 py-3 text-sm text-teal-800">
           <Mic size={16} className="shrink-0" />
-          Tap the microphone on any question and just speak — we'll write it down for you.
+          {t('story.micBanner')}
         </div>
 
         <QuestionBlock
-          label="What is this product made from?"
+          label={t('story.q1Label')}
           field="materials"
-          placeholder="e.g. Natural bamboo, hand-split and sun-dried"
+          placeholder={t('story.q1Placeholder')}
           value={story.materials}
           onUpdate={update}
+          micLabel={t('story.micAriaLabel')}
+          listeningNote={t('story.listeningNote')}
+          lang={speechLang}
         />
         <QuestionBlock
-          label="How long does it take you to make?"
+          label={t('story.q2Label')}
           field="timeToMake"
-          placeholder="e.g. About 2 to 3 days"
+          placeholder={t('story.q2Placeholder')}
           value={story.timeToMake}
           onUpdate={update}
+          micLabel={t('story.micAriaLabel')}
+          listeningNote={t('story.listeningNote')}
+          lang={speechLang}
         />
         <QuestionBlock
-          label="Is there a story or tradition behind it?"
+          label={t('story.q3Label')}
           field="traditionStory"
-          placeholder="e.g. I learned this from my mother, who learned it from hers..."
+          placeholder={t('story.q3Placeholder')}
           value={story.traditionStory}
           onUpdate={update}
+          micLabel={t('story.micAriaLabel')}
+          listeningNote={t('story.listeningNote')}
+          lang={speechLang}
         />
         <QuestionBlock
-          label="Where is this craft traditionally made?"
+          label={t('story.q4Label')}
           field="origin"
-          placeholder="e.g. Our village workshop, known for bamboo craft"
+          placeholder={t('story.q4Placeholder')}
           value={story.origin}
           onUpdate={update}
+          micLabel={t('story.micAriaLabel')}
+          listeningNote={t('story.listeningNote')}
+          lang={speechLang}
         />
 
-        <p className="mt-2 text-xs text-ink-700/50">
-          We'll use exactly what you tell us — we never invent traditions, origins or details you haven't shared.
-        </p>
+        <p className="mt-2 text-xs text-ink-700/50">{t('story.footerNote')}</p>
 
         <div className="mt-8 flex flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-          <GhostButton onClick={onBack}>← Back</GhostButton>
+          <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
           <PrimaryButton onClick={onGenerate} disabled={!canContinue} className="w-full sm:w-auto">
             <Sparkles size={18} />
-            Generate My Listing
+            {t('story.generateBtn')}
           </PrimaryButton>
         </div>
       </Card>

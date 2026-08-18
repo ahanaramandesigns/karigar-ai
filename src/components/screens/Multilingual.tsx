@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Globe2, Loader2, Sparkles } from 'lucide-react';
 import { Card, CopyButton, EyebrowTitle, GhostButton, PrimaryButton, SpeakButton } from '../ui';
+import { useT } from '../../i18n/I18nContext';
 import { LANGUAGE_LABELS, SPEECH_LOCALES, type Language, type TranslatedListing } from '../../types';
 
 interface Props {
   selectedLanguages: Language[];
-  onToggleLanguage: (lang: Language) => void;
   translations: Partial<Record<Language, TranslatedListing>>;
   isLoading: boolean;
   onTranslate: () => void;
@@ -13,7 +13,8 @@ interface Props {
   onBack: () => void;
 }
 
-export function Multilingual({ selectedLanguages, onToggleLanguage, translations, isLoading, onTranslate, onContinue, onBack }: Props) {
+export function Multilingual({ selectedLanguages, translations, isLoading, onTranslate, onContinue, onBack }: Props) {
+  const t = useT();
   const available = (Object.keys(translations) as Language[]).filter((l) => translations[l]);
   const [activeTab, setActiveTab] = useState<Language | null>(available[0] ?? null);
   const active = activeTab && translations[activeTab] ? translations[activeTab] : available.length ? translations[available[0]] : null;
@@ -21,37 +22,32 @@ export function Multilingual({ selectedLanguages, onToggleLanguage, translations
   return (
     <div>
       <EyebrowTitle
-        eyebrow="Step 6 of 8"
-        title="Reach Customers in Their Language"
-        subtitle="Choose the languages you want your listing translated into."
+        eyebrow={t('nav.stepOf', { n: 6, total: 8 })}
+        title={t('multilingual.title')}
+        subtitle={t('multilingual.subtitle')}
         icon={<Globe2 size={14} />}
       />
 
       <Card className="mx-auto max-w-3xl">
-        <div className="mb-6 flex flex-wrap justify-center gap-3">
-          {(Object.keys(LANGUAGE_LABELS) as Language[]).map((lang) => {
-            const info = LANGUAGE_LABELS[lang];
-            const selected = selectedLanguages.includes(lang);
-            return (
-              <button
+        <div className="mb-6 text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-wide text-ink-700/50">{t('multilingual.chosenLabel')}</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {selectedLanguages.map((lang) => (
+              <span
                 key={lang}
-                onClick={() => onToggleLanguage(lang)}
-                className={`flex items-center gap-2 rounded-2xl border-2 px-4 py-3 text-sm font-semibold transition-colors ${
-                  selected ? 'border-terracotta-400 bg-terracotta-50 text-terracotta-700' : 'border-cream-300 bg-white text-ink-700/70 hover:border-terracotta-200'
-                }`}
+                className="flex items-center gap-1.5 rounded-2xl border-2 border-terracotta-400 bg-terracotta-50 px-3 py-1.5 text-sm font-semibold text-terracotta-700"
               >
-                <span className="text-lg">{info.flag}</span>
-                {info.name}
-                <span className="text-xs text-ink-700/40">({info.native})</span>
-              </button>
-            );
-          })}
+                <span className="text-lg">{LANGUAGE_LABELS[lang].flag}</span>
+                {LANGUAGE_LABELS[lang].name}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="mb-6 text-center">
           <PrimaryButton onClick={onTranslate} disabled={isLoading || selectedLanguages.length === 0}>
             {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Globe2 size={18} />}
-            {isLoading ? 'Translating...' : `Translate to ${selectedLanguages.length || ''} language${selectedLanguages.length === 1 ? '' : 's'}`}
+            {isLoading ? t('multilingual.translatingBtn') : t('multilingual.translateBtn', { n: selectedLanguages.length })}
           </PrimaryButton>
         </div>
 
@@ -108,10 +104,10 @@ export function Multilingual({ selectedLanguages, onToggleLanguage, translations
       </Card>
 
       <div className="mx-auto mt-8 flex max-w-3xl flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
-        <GhostButton onClick={onBack}>← Back</GhostButton>
+        <GhostButton onClick={onBack}>{t('common.back')}</GhostButton>
         <PrimaryButton onClick={onContinue} disabled={available.length === 0} className="w-full sm:w-auto">
           <Sparkles size={18} />
-          Continue to Marketing
+          {t('multilingual.continueBtn')}
         </PrimaryButton>
       </div>
     </div>
