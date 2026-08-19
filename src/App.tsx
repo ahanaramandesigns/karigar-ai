@@ -254,7 +254,7 @@ export default function App() {
 
   return (
     <I18nProvider language={state.uiLanguage}>
-      <div className="min-h-screen bg-cream-50">
+      <div className="min-h-screen">
         <SkipLink />
         <ReadOnHover enabled={readOnHover} lang={SPEECH_LOCALES[state.uiLanguage]} />
         <Header

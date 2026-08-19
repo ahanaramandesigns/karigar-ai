@@ -69,10 +69,24 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Site-wide background detailing: a faint four-colour dot grid (echoing a
+   block-print "butti" motif, one dot per palette colour) layered over a
+   diagonal woven crosshatch. Both are subtle enough to read as textured
+   paper/fabric behind content rather than competing with it — applied to
+   <body> so every screen gets it, not just the Landing page. */
 body {
   font-family: var(--font-sans);
   background-color: var(--color-cream-50);
   color: var(--color-ink-900);
+  background-image:
+    radial-gradient(circle, rgba(204, 58, 36, 0.16) 2.6px, transparent 2.8px),
+    radial-gradient(circle, rgba(242, 117, 26, 0.16) 2.6px, transparent 2.8px),
+    radial-gradient(circle, rgba(231, 159, 14, 0.18) 2.6px, transparent 2.8px),
+    radial-gradient(circle, rgba(58, 99, 175, 0.16) 2.6px, transparent 2.8px),
+    repeating-linear-gradient(45deg, rgba(111, 47, 20, 0.035) 0px, rgba(111, 47, 20, 0.035) 1px, transparent 1px, transparent 14px),
+    repeating-linear-gradient(-45deg, rgba(111, 47, 20, 0.035) 0px, rgba(111, 47, 20, 0.035) 1px, transparent 1px, transparent 14px);
+  background-size: 72px 72px, 72px 72px, 72px 72px, 72px 72px, auto, auto;
+  background-position: 0 0, 36px 0, 0 36px, 36px 36px, 0 0, 0 0;
 }
 
 .font-display {
@@ -82,13 +96,6 @@ body {
 ::selection {
   background: var(--color-terracotta-200);
   color: var(--color-ink-900);
-}
-
-/* subtle woven texture overlay */
-.texture-weave {
-  background-image:
-    repeating-linear-gradient(45deg, rgba(179, 110, 60, 0.035) 0px, rgba(179, 110, 60, 0.035) 1px, transparent 1px, transparent 12px),
-    repeating-linear-gradient(-45deg, rgba(179, 110, 60, 0.035) 0px, rgba(179, 110, 60, 0.035) 1px, transparent 1px, transparent 12px);
 }
 
 @keyframes float-soft {

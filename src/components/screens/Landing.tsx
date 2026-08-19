@@ -42,7 +42,7 @@ export function Landing({
   };
 
   return (
-    <div className="texture-weave">
+    <div>
       {/* Language + accessibility — kept first, at the very top */}
       <section className="border-b border-terracotta-100 bg-white/70 py-10">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
