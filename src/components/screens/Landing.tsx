@@ -154,15 +154,15 @@ export function Landing({
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
-              { icon: Camera, step: '1', title: t('landing.step1Title'), desc: t('landing.step1Desc') },
-              { icon: Mic, step: '2', title: t('landing.step2Title'), desc: t('landing.step2Desc') },
-              { icon: Globe2, step: '3', title: t('landing.step3Title'), desc: t('landing.step3Desc') },
-            ].map(({ icon: Icon, step, title, desc }) => (
+              { icon: Camera, step: '1', title: t('landing.step1Title'), desc: t('landing.step1Desc'), badge: 'bg-terracotta-500', label: 'text-terracotta-500' },
+              { icon: Mic, step: '2', title: t('landing.step2Title'), desc: t('landing.step2Desc'), badge: 'bg-marigold-500', label: 'text-marigold-600' },
+              { icon: Globe2, step: '3', title: t('landing.step3Title'), desc: t('landing.step3Desc'), badge: 'bg-teal-500', label: 'text-teal-600' },
+            ].map(({ icon: Icon, step, title, desc, badge, label }) => (
               <div key={step} className="rounded-3xl bg-cream-100 p-6 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-terracotta-500 text-white">
+                <div className={`mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl text-white ${badge}`}>
                   <Icon size={26} />
                 </div>
-                <div className="mb-1 text-xs font-bold uppercase tracking-wide text-terracotta-500">Step {step}</div>
+                <div className={`mb-1 text-xs font-bold uppercase tracking-wide ${label}`}>Step {step}</div>
                 <h3 className="font-display text-lg font-semibold text-ink-900">{title}</h3>
                 <p className="mt-1 text-sm text-ink-700/70">{desc}</p>
               </div>
@@ -179,14 +179,14 @@ export function Landing({
         <p className="mx-auto mt-2 max-w-2xl text-center text-ink-700/70">{t('landing.handleSubtitle')}</p>
         <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {[
-            { icon: Wand2, label: t('landing.featureDescriptions') },
-            { icon: Tags, label: t('landing.featurePricing') },
-            { icon: Globe2, label: t('landing.featureTranslations') },
-            { icon: Sparkles, label: t('landing.featureMarketing') },
-          ].map(({ icon: Icon, label }) => (
-            <div key={label} className="flex flex-col items-center gap-2 rounded-2xl border border-teal-100 bg-teal-50/50 p-5 text-center">
-              <Icon className="text-teal-600" size={24} />
-              <span className="text-sm font-semibold text-teal-800">{label}</span>
+            { icon: Wand2, label: t('landing.featureDescriptions'), border: 'border-terracotta-100', bg: 'bg-terracotta-50/50', icon_: 'text-terracotta-600', text: 'text-terracotta-800' },
+            { icon: Tags, label: t('landing.featurePricing'), border: 'border-marigold-200', bg: 'bg-marigold-50/50', icon_: 'text-marigold-600', text: 'text-marigold-800' },
+            { icon: Globe2, label: t('landing.featureTranslations'), border: 'border-ochre-200', bg: 'bg-ochre-50/50', icon_: 'text-ochre-600', text: 'text-ochre-800' },
+            { icon: Sparkles, label: t('landing.featureMarketing'), border: 'border-teal-100', bg: 'bg-teal-50/50', icon_: 'text-teal-600', text: 'text-teal-800' },
+          ].map(({ icon: Icon, label, border, bg, icon_, text }) => (
+            <div key={label} className={`flex flex-col items-center gap-2 rounded-2xl border p-5 text-center ${border} ${bg}`}>
+              <Icon className={icon_} size={24} />
+              <span className={`text-sm font-semibold ${text}`}>{label}</span>
             </div>
           ))}
         </div>

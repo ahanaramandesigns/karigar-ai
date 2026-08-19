@@ -5,39 +5,54 @@
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
-  /* Heritage meets technology palette */
-  --color-terracotta-50: #fdf5f0;
-  --color-terracotta-100: #fae6d8;
-  --color-terracotta-200: #f3c9ab;
-  --color-terracotta-300: #eba578;
-  --color-terracotta-400: #e17e49;
-  --color-terracotta-500: #d3612e;
-  --color-terracotta-600: #b84a22;
-  --color-terracotta-700: #96391c;
-  --color-terracotta-800: #78301c;
-  --color-terracotta-900: #632a1c;
+  /* Handicraft palette — madder red, marigold orange, turmeric yellow and
+     indigo blue, the way they show up in block-print textiles, dyed
+     threads and market stalls. `terracotta`/`ochre`/`teal` are the
+     original token names (kept so every existing bg-terracotta-500 etc.
+     across the app repaints automatically); `marigold` is new. */
+  --color-terracotta-50: #fdf1ef;
+  --color-terracotta-100: #fbdedb;
+  --color-terracotta-200: #f4b6ae;
+  --color-terracotta-300: #ea8a7c;
+  --color-terracotta-400: #e0604c;
+  --color-terracotta-500: #cc3a24;
+  --color-terracotta-600: #ad2a17;
+  --color-terracotta-700: #8a2314;
+  --color-terracotta-800: #6f1e14;
+  --color-terracotta-900: #5c1c15;
 
-  --color-ochre-50: #fdf8ec;
-  --color-ochre-100: #f9ecc7;
-  --color-ochre-200: #f2d789;
-  --color-ochre-300: #ecc25e;
-  --color-ochre-400: #e5a92f;
-  --color-ochre-500: #d38f1f;
-  --color-ochre-600: #b26f18;
-  --color-ochre-700: #8e5218;
-  --color-ochre-800: #75421a;
-  --color-ochre-900: #63371a;
+  --color-marigold-50: #fff6ea;
+  --color-marigold-100: #ffe8c4;
+  --color-marigold-200: #fecb82;
+  --color-marigold-300: #fdac4c;
+  --color-marigold-400: #fb8f2c;
+  --color-marigold-500: #f2751a;
+  --color-marigold-600: #d15a10;
+  --color-marigold-700: #a8440f;
+  --color-marigold-800: #833714;
+  --color-marigold-900: #6b2f14;
 
-  --color-teal-50: #eef6f5;
-  --color-teal-100: #d3e9e6;
-  --color-teal-200: #a9d3ce;
-  --color-teal-300: #77b5ae;
-  --color-teal-400: #4d938c;
-  --color-teal-500: #337771;
-  --color-teal-600: #285f5a;
-  --color-teal-700: #234d49;
-  --color-teal-800: #1f3f3c;
-  --color-teal-900: #1c3532;
+  --color-ochre-50: #fffbea;
+  --color-ochre-100: #fef3c2;
+  --color-ochre-200: #fce187;
+  --color-ochre-300: #fbce50;
+  --color-ochre-400: #f7b920;
+  --color-ochre-500: #e79f0e;
+  --color-ochre-600: #c17e09;
+  --color-ochre-700: #97600d;
+  --color-ochre-800: #7a4d12;
+  --color-ochre-900: #654013;
+
+  --color-teal-50: #eef3fb;
+  --color-teal-100: #d7e3f5;
+  --color-teal-200: #aec6ea;
+  --color-teal-300: #7fa3db;
+  --color-teal-400: #5680c9;
+  --color-teal-500: #3a63af;
+  --color-teal-600: #2c4d8c;
+  --color-teal-700: #253f70;
+  --color-teal-800: #21365c;
+  --color-teal-900: #1f2f4d;
 
   --color-cream-50: #fffdf9;
   --color-cream-100: #fdf9f0;
